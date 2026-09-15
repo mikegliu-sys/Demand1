@@ -1,0 +1,3389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>善学乐享｜培训需求智能中心</title>
+<style>
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+:root{
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --primary-subtle: #eff6ff;
+    --primary-border: #bfdbfe;
+    --text-main: #0f172a;
+    --text-sub: #475569;
+    --text-muted: #94a3b8;
+    --border: #e2e8f0;
+    --border-light: #f1f5f9;
+    --bg-page: #f8fafc;
+    --bg-surface: #ffffff;
+    --success: #16a34a;
+    --success-bg: #f0fdf4;
+    --success-border: #bbf7d0;
+    --warning: #d97706;
+    --warning-bg: #fffbeb;
+    --warning-border: #fde68a;
+    --danger: #dc2626;
+    --danger-bg: #fef2f2;
+    --danger-border: #fecaca;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+body{
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg-page);
+    color: var(--text-main);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+button, input, textarea, select{
+    font-family: inherit;
+    font-size: 13px;
+}
+button{
+    cursor: pointer;
+}
+.app-container{
+    min-height: 100vh;
+    display: flex;
+}
+.sidebar{
+    width: 240px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background: var(--bg-surface);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    z-index: 30;
+}
+.brand{
+    height: 72px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    border-bottom: 1px solid var(--border-light);
+    gap: 10px;
+}
+.brand-logo-img{
+    height: 40px;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    display: block;
+}
+.brand-title{
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-main);
+}
+.brand-subtitle{
+    font-size: 10px;
+    color: var(--text-muted);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.nav-scroll{
+    padding: 16px 10px;
+    flex: 1;
+    overflow-y: auto;
+}
+.nav-group-title{
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-muted);
+    padding: 10px 12px 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+.nav-item{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 9px 12px;
+    border-radius: var(--radius-sm);
+    color: var(--text-sub);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    margin-bottom: 3px;
+}
+.nav-item:hover{
+    background: var(--border-light);
+    color: var(--text-main);
+}
+.nav-item.active{
+    background: var(--primary-subtle);
+    color: var(--primary);
+    font-weight: 600;
+}
+.nav-icon{
+    width: 18px;
+    display: flex;
+    justify-content: center;
+    font-size: 14px;
+}
+.nav-badge{
+    margin-left: auto;
+    font-size: 10px;
+    background: var(--border);
+    color: var(--text-sub);
+    padding: 1px 6px;
+    border-radius: 10px;
+    font-weight: 600;
+}
+.nav-item.active .nav-badge{
+    background: #dbeafe;
+    color: var(--primary);
+}
+.main-wrapper{
+    margin-left: 240px;
+    width: calc(100% - 240px);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+.topbar{
+    height: 72px;
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+}
+.page-heading h1{
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text-main);
+}
+.page-heading p{
+    font-size: 11px;
+    color: var(--text-sub);
+    margin-top: 2px;
+}
+.user-profile{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.avatar{
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #dbeafe;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    border: 1px solid #bfdbfe;
+}
+.user-meta{
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+}
+.user-name{
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-main);
+}
+.user-role{
+    font-size: 10px;
+    color: var(--text-muted);
+}
+.content-area{
+    padding: 24px 32px 60px;
+    max-width: 1400px;
+    width: 100%;
+}
+.page-view{
+    display: none;
+}
+.page-view.active{
+    display: block;
+}
+.card{
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+.btn{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: 600;
+    border: 1px solid transparent;
+    transition: all 0.15s ease;
+}
+.btn-primary{
+    background: var(--primary);
+    color: #fff;
+}
+.btn-primary:hover{
+    background: var(--primary-hover);
+}
+.btn-secondary{
+    background: #fff;
+    border-color: var(--border);
+    color: var(--text-sub);
+}
+.btn-secondary:hover{
+    background: var(--border-light);
+    color: var(--text-main);
+}
+.btn-subtle{
+    background: var(--primary-subtle);
+    color: var(--primary);
+}
+.btn-subtle:hover{
+    background: #dbeafe;
+}
+.btn-warning{
+    background: var(--warning);
+    color: #fff;
+}
+.btn-warning:hover{
+    background: #b45309;
+}
+.btn-danger{
+    background: var(--danger);
+    color: #fff;
+}
+.btn-danger:hover{
+    background: #b91c1c;
+}
+.btn-sm{
+    padding: 5px 10px;
+    font-size: 11px;
+}
+.hero-banner{
+    padding: 28px 32px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    gap: 20px;
+}
+.hero-tag{
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--primary);
+    background: var(--primary-subtle);
+    margin-bottom: 10px;
+}
+.hero-banner h2{
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 6px;
+}
+.hero-banner p{
+    font-size: 13px;
+    color: var(--text-sub);
+    max-width: 660px;
+    line-height: 1.6;
+}
+.stats-row{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+.stat-card{
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 18px 20px;
+}
+.stat-label{
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-sub);
+}
+.stat-val{
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text-main);
+    margin: 4px 0 2px;
+}
+.stat-hint{
+    font-size: 11px;
+    color: var(--text-muted);
+}
+.empty-box{
+    padding: 48px 20px;
+    text-align: center;
+    background: #fff;
+    border: 1px dashed var(--border);
+    border-radius: var(--radius-md);
+}
+.empty-icon{
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--border-light);
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    margin: 0 auto 12px;
+}
+.empty-title{
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-sub);
+    margin-bottom: 4px;
+}
+.empty-desc{
+    font-size: 12px;
+    color: var(--text-muted);
+    max-width: 420px;
+    margin: 0 auto 16px;
+}
+.wizard-box{
+    max-width: 840px;
+    margin: 0 auto;
+}
+.wizard-progress{
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.wizard-step-node{
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+.wizard-step-node:last-child{
+    flex: 0 0 auto;
+}
+.step-num{
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: #fff;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+}
+.wizard-step-node.active .step-num{
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #fff;
+}
+.wizard-step-node.done .step-num{
+    background: var(--success-bg);
+    border-color: var(--success);
+    color: var(--success);
+}
+.step-title{
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-left: 8px;
+}
+.wizard-step-node.active .step-title{
+    color: var(--primary);
+    font-weight: 700;
+}
+.wizard-step-node.done .step-title{
+    color: var(--text-main);
+}
+.step-connector{
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    margin: 0 10px;
+}
+.form-panel{
+    padding: 28px 32px;
+}
+.step-pane{
+    display: none;
+}
+.step-pane.active{
+    display: block;
+}
+.pane-header{
+    margin-bottom: 20px;
+}
+.pane-header h3{
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-main);
+}
+.pane-header p{
+    font-size: 12px;
+    color: var(--text-sub);
+    margin-top: 3px;
+}
+.form-group{
+    margin-bottom: 20px;
+}
+.form-label{
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 6px;
+}
+.form-label .req{
+    color: var(--danger);
+    margin-left: 2px;
+}
+.form-hint{
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+.form-input, .form-textarea, .form-select{
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 8px 12px;
+    color: var(--text-main);
+    background: #fff;
+    outline: none;
+}
+.form-textarea{
+    height: 100px;
+    resize: vertical;
+    line-height: 1.5;
+}
+.form-input:focus, .form-textarea:focus, .form-select:focus{
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px var(--primary-subtle);
+}
+.radio-tile-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+.radio-tile{
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-sub);
+    text-align: center;
+    cursor: pointer;
+    background: #fff;
+    transition: all 0.15s ease;
+}
+.radio-tile:hover{
+    border-color: var(--primary-border);
+}
+.radio-tile.selected{
+    border-color: var(--primary);
+    background: var(--primary-subtle);
+    color: var(--primary);
+    font-weight: 600;
+}
+.error-tip{
+    font-size: 11px;
+    color: var(--danger);
+    margin-top: 5px;
+    display: none;
+}
+.error-tip.show{
+    display: block;
+}
+.wizard-footer{
+    margin-top: 28px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.summary-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+.summary-field{
+    background: var(--bg-page);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+}
+.summary-label{
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 3px;
+}
+.summary-val{
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-main);
+}
+.summary-quote{
+    background: var(--bg-page);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 12px;
+    font-size: 12px;
+    color: var(--text-sub);
+    line-height: 1.6;
+    margin-bottom: 14px;
+}
+.ai-disclaimer{
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    background: var(--primary-subtle);
+    border: 1px solid var(--primary-border);
+    color: #1e40af;
+    font-size: 12px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+.toolbar-row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+.toolbar-left{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    max-width: 600px;
+}
+.search-box{
+    position: relative;
+    flex: 1;
+}
+.search-box input{
+    width: 100%;
+    padding: 7px 10px 7px 30px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: #fff;
+    outline: none;
+}
+.search-box input:focus{
+    border-color: var(--primary);
+}
+.search-icon{
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 12px;
+}
+.resource-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+.resource-card{
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.card-top-tag{
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--primary);
+    background: var(--primary-subtle);
+    margin-bottom: 6px;
+}
+.resource-card h4{
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 6px;
+}
+.resource-desc{
+    font-size: 11px;
+    color: var(--text-sub);
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+.resource-meta-list{
+    font-size: 11px;
+    color: var(--text-muted);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 12px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border-light);
+}
+.resource-meta-item{
+    display: flex;
+    justify-content: space-between;
+}
+.tag-wrap{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 12px;
+}
+.pill-tag{
+    font-size: 10px;
+    padding: 2px 6px;
+    background: var(--border-light);
+    color: var(--text-sub);
+    border-radius: 4px;
+}
+.card-footer-action{
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid var(--border-light);
+    padding-top: 10px;
+}
+.data-table-wrapper{
+    overflow-x: auto;
+}
+.data-table{
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    text-align: left;
+}
+.data-table th{
+    background: var(--bg-page);
+    color: var(--text-sub);
+    font-weight: 600;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    font-size: 11px;
+}
+.data-table td{
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text-main);
+    vertical-align: middle;
+}
+.data-table tr:hover td{
+    background: #fbfcfe;
+}
+.status-pill{
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 7px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 600;
+}
+.status-pill.blue{
+    background: var(--primary-subtle);
+    color: var(--primary);
+}
+.status-pill.green{
+    background: var(--success-bg);
+    color: var(--success);
+}
+.status-pill.amber{
+    background: var(--warning-bg);
+    color: var(--warning);
+}
+.status-pill.red{
+    background: var(--danger-bg);
+    color: var(--danger);
+}
+.dashboard-matrix{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 18px;
+}
+.panel{
+    padding: 20px;
+}
+.panel-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+.panel-title{
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-main);
+}
+.funnel-container{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.funnel-row{
+    background: var(--bg-page);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.funnel-row-label{
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-sub);
+}
+.funnel-row-val{
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--primary);
+}
+.bar-chart-list{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.bar-chart-item{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.bar-meta{
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-sub);
+}
+.bar-track{
+    height: 7px;
+    background: var(--border-light);
+    border-radius: 4px;
+    overflow: hidden;
+}
+.bar-fill{
+    height: 100%;
+    background: var(--primary);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+.modal-backdrop{
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.5);
+    backdrop-filter: blur(2px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 20px;
+}
+.modal-backdrop.show{
+    display: flex;
+}
+.modal-window{
+    background: #fff;
+    border-radius: var(--radius-lg);
+    width: min(720px, 100%);
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border);
+}
+.modal-header{
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.modal-header h3{
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-main);
+}
+.btn-close-modal{
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: var(--text-muted);
+    padding: 2px 6px;
+}
+.modal-body{
+    padding: 20px;
+}
+.modal-footer{
+    padding: 14px 20px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    background: var(--bg-page);
+    border-bottom-left-radius: var(--radius-lg);
+    border-bottom-right-radius: var(--radius-lg);
+}
+.ai-anim-pane{
+    padding: 40px 20px;
+    text-align: center;
+}
+.ai-logo-bounce{
+    width: 48px;
+    height: 48px;
+    background: var(--primary-subtle);
+    border: 1px solid var(--primary-border);
+    color: var(--primary);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 800;
+    margin: 0 auto 16px;
+}
+.ai-steps-checklist{
+    max-width: 300px;
+    margin: 20px auto 0;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.ai-step-check-item{
+    font-size: 11px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.ai-step-check-item.in-progress{
+    color: var(--primary);
+    font-weight: 600;
+}
+.ai-step-check-item.done{
+    color: var(--success);
+    font-weight: 500;
+}
+.res-block{
+    margin-bottom: 18px;
+}
+.res-title{
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.coverage-banner{
+    padding: 14px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 14px;
+}
+.coverage-banner.green{
+    background: var(--success-bg);
+    border: 1px solid var(--success-border);
+    color: #14532d;
+}
+.coverage-banner.amber{
+    background: var(--warning-bg);
+    border: 1px solid var(--warning-border);
+    color: #78350f;
+}
+.coverage-banner.red{
+    background: var(--danger-bg);
+    border: 1px solid var(--danger-border);
+    color: #7f1d1d;
+}
+.toast-shelf{
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    pointer-events: none;
+}
+.toast-msg{
+    background: #0f172a;
+    color: #fff;
+    padding: 9px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    font-weight: 500;
+    box-shadow: var(--shadow-md);
+    pointer-events: auto;
+    transition: all 0.2s ease;
+    opacity: 0;
+    transform: translateY(10px);
+}
+.toast-msg.visible{
+    opacity: 1;
+    transform: translateY(0);
+}
+@media(max-width: 980px){
+    .sidebar{ width: 72px; }
+    .brand-title, .brand-subtitle, .nav-group-title, .nav-item span, .nav-badge{ display: none; }
+    .brand{ justify-content: center; padding: 0; }
+    .nav-item{ justify-content: center; }
+    .main-wrapper{ margin-left: 72px; width: calc(100% - 72px); }
+    .stats-row{ grid-template-columns: repeat(2, 1fr); }
+    .resource-grid{ grid-template-columns: 1fr 1fr; }
+    .dashboard-matrix{ grid-template-columns: 1fr; }
+}
+@media(max-width: 640px){
+    .topbar{ padding: 0 16px; }
+    .content-area{ padding: 16px; }
+    .hero-banner{ flex-direction: column; align-items: flex-start; }
+    .stats-row{ grid-template-columns: 1fr; }
+    .radio-tile-grid{ grid-template-columns: 1fr; }
+    .summary-grid{ grid-template-columns: 1fr; }
+    .resource-grid{ grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="app-container">
+<aside class="sidebar">
+    <div class="brand">
+        <img src="善学乐享新logo-01.png" alt="善学乐享" class="brand-logo-img" id="sidebarBrandLogo" onerror="handleLogoError(this)">
+        <div id="fallbackBrandBadge" style="display:none; width:36px; height:36px; border-radius:10px; background:linear-gradient(135deg, #f59e0b, #f97316, #ec4899); color:#fff; align-items:center; justify-content:center; font-weight:800; font-size:16px; flex-shrink:0;">
+            学
+        </div>
+        <div>
+            <div class="brand-title">善学乐享</div>
+            <div class="brand-subtitle">Training Intelligence</div>
+        </div>
+    </div>
+    <div class="nav-scroll">
+        <div class="nav-group-title">员工与业务服务</div>
+        <div class="nav-item active" data-page="home">
+            <div class="nav-icon">⌂</div>
+            <span>首页</span>
+        </div>
+        <div class="nav-item" data-page="submit">
+            <div class="nav-icon">＋</div>
+            <span>提交培训需求</span>
+        </div>
+        <div class="nav-item" data-page="mine">
+            <div class="nav-icon">▣</div>
+            <span>我的需求</span>
+            <span class="nav-badge" id="badgeMyCount">0</span>
+        </div>
+
+        <div class="nav-group-title">组织知识资产</div>
+        <div class="nav-item" data-page="courses">
+            <div class="nav-icon">▤</div>
+            <span>课程资源</span>
+            <span class="nav-badge" id="badgeCourseCount">0</span>
+        </div>
+        <div class="nav-item" data-page="trainers">
+            <div class="nav-icon">◎</div>
+            <span>内训师资源</span>
+            <span class="nav-badge" id="badgeTrainerCount">0</span>
+        </div>
+        <div class="nav-item" data-page="pool">
+            <div class="nav-icon">◇</div>
+            <span>课程开发池</span>
+            <span class="nav-badge" id="badgePoolCount">0</span>
+        </div>
+
+        <div class="nav-group-title">HR数字化管理</div>
+        <div class="nav-item" data-page="dashboard" id="navItemDashboard">
+            <div class="nav-icon">▥</div>
+            <span>需求驾驶舱</span>
+            <span class="nav-badge" id="badgeAdminLock" style="background:#fee2e2; color:#dc2626;">🔒 需密码</span>
+        </div>
+    </div>
+</aside>
+
+<div class="main-wrapper">
+    <header class="topbar">
+        <div class="page-heading">
+            <h1 id="topbarTitle">善学乐享｜培训需求智能中心</h1>
+            <p id="topbarDesc">从员工真实需求出发，让已有课程、内训师与培训计划更精准</p>
+        </div>
+        <div class="user-profile">
+            <div class="user-meta">
+                <span class="user-name" id="currentUserRoleBadge">员工视图</span>
+                <span class="user-role" id="cloudSyncStatusText" style="cursor:pointer;" onclick="syncResourcesFromGoogleSheet(true)" title="点击刷新云端知识库">云端就绪</span>
+            </div>
+            <button class="btn btn-secondary btn-sm" id="btnToggleAdminAuth" onclick="handleAdminAuthToggle()">
+                🔑 切换管理员视图
+            </button>
+            <button class="btn btn-secondary btn-sm" onclick="syncResourcesFromGoogleSheet(true)" title="从 Google 表格拉取最新课程与内训师">
+                🔄 刷新云端库
+            </button>
+            <div class="avatar" id="avatarRoleIcon">U</div>
+        </div>
+    </header>
+
+    <div class="content-area">
+        <!-- VIEW: HOME -->
+        <section class="page-view active" id="view-home">
+            <div class="hero-banner">
+                <div>
+                    <span class="hero-tag">TRAINING NEEDS INTELLIGENCE</span>
+                    <h2>你想学什么？告诉我们。</h2>
+                    <p>
+                        不需要想一个专业的课程名称，只需要告诉我们你在工作中遇到了什么问题。<br>
+                        AI会帮你分析需求，并从课程库和内训师库中寻找匹配资源。
+                    </p>
+                </div>
+                <button class="btn btn-primary" onclick="navigateTo('submit')">
+                    ＋ 提交培训需求
+                </button>
+            </div>
+            <div id="homeNoticeContainer"></div>
+        </section>
+
+        <!-- VIEW: SUBMIT -->
+        <section class="page-view" id="view-submit">
+            <div class="wizard-box">
+                <div class="wizard-progress">
+                    <div class="wizard-step-node active" id="wizardNode1">
+                        <div class="step-num">1</div>
+                        <div class="step-title">需求</div>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="wizard-step-node" id="wizardNode2">
+                        <div class="step-num">2</div>
+                        <div class="step-title">对象</div>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="wizard-step-node" id="wizardNode3">
+                        <div class="step-num">3</div>
+                        <div class="step-title">方式</div>
+                    </div>
+                    <div class="step-connector"></div>
+                    <div class="wizard-step-node" id="wizardNode4">
+                        <div class="step-num">4</div>
+                        <div class="step-title">确认</div>
+                    </div>
+                </div>
+
+                <div class="card form-panel">
+                    <!-- STEP 1 -->
+                    <div class="step-pane active" id="paneStep1">
+                        <div class="pane-header">
+                            <h3>01｜你希望解决什么问题？</h3>
+                            <p>可以描述工作中的痛点、遇到的问题，或者你希望提升的能力。真实表达即可。</p>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">培训主题 <span class="req">*</span></label>
+                            <input type="text" class="form-input" id="inputTheme" placeholder="请输入你希望解决的问题或诉求概述">
+                            <div class="error-tip" id="errTheme">请填写培训主题</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">具体问题 / 场景 <span class="req">*</span></label>
+                            <textarea class="form-textarea" id="inputScenario" placeholder="描述你目前遇到的问题、工作场景，或者希望培训后能够做到什么。"></textarea>
+                            <div class="error-tip" id="errScenario">请详细描述具体的工作场景或困难</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">需求类别 <span class="req">*</span></label>
+                            <div class="radio-tile-grid" id="gridCategory">
+                                <div class="radio-tile" data-group="category" data-val="工程技术">工程技术</div>
+                                <div class="radio-tile" data-group="category" data-val="生产运营">生产运营</div>
+                                <div class="radio-tile" data-group="category" data-val="通用能力">通用能力</div>
+                                <div class="radio-tile" data-group="category" data-val="一线管理">一线管理</div>
+                                <div class="radio-tile" data-group="category" data-val="商务">商务</div>
+                                <div class="radio-tile" data-group="category" data-val="领导力">领导力</div>
+                            </div>
+                            <div class="error-tip" id="errCategory">请选择需求类别</div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2 -->
+                    <div class="step-pane" id="paneStep2">
+                        <div class="pane-header">
+                            <h3>02｜这个培训是给谁的？</h3>
+                            <p>明确受众画像与规模，有助于评估培训影响面及匹配教学深度。</p>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">主要受益人群 <span class="req">*</span></label>
+                            <div class="radio-tile-grid" id="gridAudience">
+                                <div class="radio-tile" data-group="audience" data-val="我自己">我自己</div>
+                                <div class="radio-tile" data-group="audience" data-val="我的团队">我的团队</div>
+                                <div class="radio-tile" data-group="audience" data-val="部门员工">部门员工</div>
+                                <div class="radio-tile" data-group="audience" data-val="一线员工">一线员工</div>
+                                <div class="radio-tile" data-group="audience" data-val="管理人员">管理人员</div>
+                                <div class="radio-tile" data-group="audience" data-val="其他">其他</div>
+                            </div>
+                            <div class="error-tip" id="errAudience">请选择主要受益人群</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">预计受益人数 <span class="req">*</span></label>
+                            <select class="form-select" id="selectHeadcount">
+                                <option value="">请选择预计受益人数</option>
+                                <option value="1–10人">1–10人</option>
+                                <option value="11–30人">11–30人</option>
+                                <option value="31–50人">31–50人</option>
+                                <option value="51–100人">51–100人</option>
+                                <option value="100人以上">100人以上</option>
+                            </select>
+                            <div class="error-tip" id="errHeadcount">请选择预计受益人数</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">所属部门</label>
+                            <input type="text" class="form-input" id="inputDepartment" placeholder="请输入所属部门">
+                        </div>
+                    </div>
+
+                    <!-- STEP 3 -->
+                    <div class="step-pane" id="paneStep3">
+                        <div class="pane-header">
+                            <h3>03｜你希望怎么学？</h3>
+                            <p>提供对学习形式和交付节奏的期望，便于对接最适用的资源载体。</p>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">希望的学习方式 <span class="req">*</span></label>
+                            <div class="radio-tile-grid" id="gridMethod">
+                                <div class="radio-tile" data-group="method" data-val="线下培训">线下培训</div>
+                                <div class="radio-tile" data-group="method" data-val="线上直播">线上直播</div>
+                                <div class="radio-tile" data-group="method" data-val="微课">微课</div>
+                                <div class="radio-tile" data-group="method" data-val="案例分享">案例分享</div>
+                                <div class="radio-tile" data-group="method" data-val="工作坊">工作坊</div>
+                                <div class="radio-tile" data-group="method" data-val="实战辅导">实战辅导</div>
+                                <div class="radio-tile" data-group="method" data-val="不限">不限</div>
+                            </div>
+                            <div class="error-tip" id="errMethod">请选择希望的学习方式</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">希望开展时间</label>
+                            <select class="form-select" id="selectTimeline">
+                                <option value="尽快">尽快</option>
+                                <option value="1个月内" selected>1个月内</option>
+                                <option value="1–3个月">1–3个月</option>
+                                <option value="半年内">半年内</option>
+                                <option value="暂无明确时间">暂无明确时间</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">其他补充</label>
+                            <textarea class="form-textarea" id="inputAdditional" placeholder="如果有具体案例、现有资料、讲师建议等，也可以在这里告诉我们。"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- STEP 4 -->
+                    <div class="step-pane" id="paneStep4">
+                        <div class="pane-header">
+                            <h3>04｜确认你的培训需求</h3>
+                            <p>请核实提报详情。提交后，AI 会自动帮你分析需求，并从当前课程库和内训师库中寻找匹配资源。</p>
+                        </div>
+                        <div id="summaryReviewContent"></div>
+                        <div class="ai-disclaimer">
+                            <span>✦</span>
+                            <div><strong>AI智能分析就绪：</strong>系统将根据您填写的实际场景提取能力标签，并穿透已录入的 4 列标准课程与内训师数据库。</div>
+                        </div>
+                    </div>
+
+                    <div class="wizard-footer">
+                        <button class="btn btn-secondary" id="btnPrevStep" onclick="stepWizard(-1)" style="display:none;">
+                            ← 上一步
+                        </button>
+                        <div style="flex:1;"></div>
+                        <div style="display:flex; gap:10px;">
+                            <button class="btn btn-secondary" onclick="navigateTo('home')">取消并返回</button>
+                            <button class="btn btn-primary" id="btnNextStep" onclick="stepWizard(1)">
+                                下一步 →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW: MINE -->
+        <section class="page-view" id="view-mine">
+            <div class="toolbar-row">
+                <div>
+                    <h2 style="font-size:16px; font-weight:700;">我的培训需求</h2>
+                    <p style="font-size:12px; color:var(--text-sub);">查看自己提交过的需求记录、AI分析结果与资源响应状态</p>
+                </div>
+                <button class="btn btn-primary btn-sm" onclick="navigateTo('submit')">
+                    ＋ 提交新需求
+                </button>
+            </div>
+            <div id="mineListContainer"></div>
+        </section>
+
+        <!-- VIEW: COURSES (4 COLUMNS) -->
+        <section class="page-view" id="view-courses">
+            <div class="toolbar-row">
+                <div>
+                    <h2 style="font-size:16px; font-weight:700;">课程资源</h2>
+                    <p style="font-size:12px; color:var(--text-sub);">浏览已有课程与年度计划课程（标准 4 列表头规范）</p>
+                </div>
+                <div style="display:flex; gap:8px;">
+                    <button class="btn btn-secondary btn-sm" onclick="openBatchImportModal()">
+                        ⬆ 批量导入课程 (4列)
+                    </button>
+                    <button class="btn btn-primary btn-sm" onclick="openAddCourseModal()">
+                        ＋ 新增单门课程
+                    </button>
+                </div>
+            </div>
+            <div class="toolbar-row">
+                <div class="toolbar-left">
+                    <div class="search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" id="courseSearchKeyword" placeholder="搜索课程名称、认证讲师、类别……" oninput="renderCourseCatalog()">
+                    </div>
+                    <select class="form-select" style="width:140px;" id="courseFilterCategory" onchange="renderCourseCatalog()">
+                        <option value="">全部类别</option>
+                        <option value="工程技术">工程技术</option>
+                        <option value="生产运营">生产运营</option>
+                        <option value="通用能力">通用能力</option>
+                        <option value="一线管理">一线管理</option>
+                        <option value="商务">商务</option>
+                        <option value="领导力">领导力</option>
+                    </select>
+                </div>
+            </div>
+            <div id="courseGridContainer"></div>
+        </section>
+
+        <!-- VIEW: TRAINERS (4 COLUMNS) -->
+        <section class="page-view" id="view-trainers">
+            <div class="toolbar-row">
+                <div>
+                    <h2 style="font-size:16px; font-weight:700;">内训师资源</h2>
+                    <p style="font-size:12px; color:var(--text-sub);">找到懂业务、懂实践、愿意分享的内部专家与讲师（标准 4 列表头规范）</p>
+                </div>
+                <div style="display:flex; gap:8px;">
+                    <button class="btn btn-secondary btn-sm" onclick="openBatchImportTrainerModal()">
+                        ⬆ 批量导入内训师 (4列)
+                    </button>
+                    <button class="btn btn-primary btn-sm" onclick="openAddTrainerModal()">
+                        ＋ 新增内训师
+                    </button>
+                </div>
+            </div>
+            <div class="toolbar-row">
+                <div class="toolbar-left">
+                    <div class="search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" id="trainerSearchKeyword" placeholder="搜索内训师姓名、所属部门、擅长领域、已开发课程……" oninput="renderTrainerCatalog()">
+                    </div>
+                </div>
+            </div>
+            <div id="trainerGridContainer"></div>
+        </section>
+
+        <!-- VIEW: POOL -->
+        <section class="page-view" id="view-pool">
+            <div class="toolbar-row">
+                <div>
+                    <h2 style="font-size:16px; font-weight:700;">课程开发池</h2>
+                    <p style="font-size:12px; color:var(--text-sub);">汇总现有资源无法充分覆盖的员工真实培训需求，支持HR推进课程开发立项</p>
+                </div>
+                <button class="btn btn-secondary btn-sm" onclick="navigateTo('submit')">
+                    ＋ 提报并纳入开发池
+                </button>
+            </div>
+            <div id="poolTableContainer"></div>
+        </section>
+
+        <!-- VIEW: DASHBOARD -->
+        <section class="page-view" id="view-dashboard">
+            <div class="toolbar-row">
+                <div>
+                    <h2 style="font-size:16px; font-weight:700;">需求驾驶舱</h2>
+                    <p style="font-size:12px; color:var(--text-sub);">从员工真实需求中发现培训重点、监控资源匹配率并捕捉新课开发机会</p>
+                </div>
+            </div>
+            <div class="stats-row">
+                <div class="stat-card">
+                    <div class="stat-label">累计需求</div>
+                    <div class="stat-val" id="dashTotal">0</div>
+                    <div class="stat-hint">实际提交的需求总数</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">本月需求</div>
+                    <div class="stat-val" id="dashMonth">0</div>
+                    <div class="stat-hint">本月提交的真实记录</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">课程匹配率</div>
+                    <div class="stat-val" id="dashMatchRate">0%</div>
+                    <div class="stat-hint">匹配到已有课程的比例</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">待开发课程</div>
+                    <div class="stat-val" id="dashPoolCount">0</div>
+                    <div class="stat-hint">开发池中评估中的科目</div>
+                </div>
+            </div>
+            <div class="dashboard-matrix">
+                <div class="panel card">
+                    <div class="panel-header">
+                        <div class="panel-title">需求 → 资源转化漏斗</div>
+                    </div>
+                    <div class="funnel-container" id="dashFunnelContainer"></div>
+                </div>
+                <div class="panel card">
+                    <div class="panel-header">
+                        <div class="panel-title">TOP 培训需求词频</div>
+                    </div>
+                    <div id="dashTopTopicsContainer"></div>
+                </div>
+                <div class="panel card">
+                    <div class="panel-header">
+                        <div class="panel-title">需求类别分布</div>
+                    </div>
+                    <div id="dashCategoryBarsContainer"></div>
+                </div>
+                <div class="panel card">
+                    <div class="panel-header">
+                        <div class="panel-title">课程开发立项机会</div>
+                    </div>
+                    <div id="dashOpportunitiesContainer"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+</div>
+
+<!-- MODAL: AI DIAGNOSIS -->
+<div class="modal-backdrop" id="modalAI">
+    <div class="modal-window">
+        <div id="aiLoadingStage" class="ai-anim-pane">
+            <div class="ai-logo-bounce">AI</div>
+            <h3 style="font-size:15px; font-weight:700; color:var(--text-main);">AI 正在深度解析您的培训诉求</h3>
+            <p style="font-size:12px; color:var(--text-sub); margin-top:4px;">从工作场景中识别胜任力，并在当前录入的 4 列课程库与内训师库中匹配资源</p>
+
+            <div class="ai-steps-checklist">
+                <div class="ai-step-check-item" id="aiCheck1">○ 正在理解你的工作场景</div>
+                <div class="ai-step-check-item" id="aiCheck2">○ 正在识别核心能力</div>
+                <div class="ai-step-check-item" id="aiCheck3">○ 正在匹配现有课程</div>
+                <div class="ai-step-check-item" id="aiCheck4">○ 正在匹配内训师</div>
+                <div class="ai-step-check-item" id="aiCheck5">○ 正在判断是否需要开发新课</div>
+            </div>
+        </div>
+
+        <div id="aiResultStage" style="display:none;">
+            <div class="modal-header">
+                <div>
+                    <h3 style="font-size:15px; font-weight:700;">AI 需求分析诊断报告</h3>
+                    <p style="font-size:11px; color:var(--text-muted); margin-top:2px;">场景提炼、胜任力抽取与资源动态匹配完成</p>
+                </div>
+                <button class="btn-close-modal" onclick="closeAIModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="res-block">
+                    <div class="res-title">01｜需求洞察</div>
+                    <div class="summary-field">
+                        <div class="summary-label">提炼核心问题</div>
+                        <div class="summary-val" id="diagCoreProblem" style="font-weight:500; line-height:1.6;"></div>
+                    </div>
+                </div>
+                <div class="res-block">
+                    <div class="res-title">02｜能力识别</div>
+                    <div id="diagCapabilityTagsWrap" class="tag-wrap"></div>
+                </div>
+                <div class="res-block">
+                    <div class="res-title">03｜已有资源匹配 · 课程匹配</div>
+                    <div id="diagMatchedCoursesList"></div>
+                </div>
+                <div class="res-block">
+                    <div class="res-title">04｜已有资源匹配 · 推荐内训师</div>
+                    <div id="diagMatchedTrainersList"></div>
+                </div>
+                <div id="diagCoverageBanner"></div>
+            </div>
+            <div class="modal-footer" id="diagModalFooter"></div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL: ADD SINGLE COURSE (4 COLUMNS) -->
+<div class="modal-backdrop" id="modalAddCourse">
+    <div class="modal-window" style="max-width:520px;">
+        <div class="modal-header">
+            <h3>＋ 新增课程资源 (4列规范)</h3>
+            <button class="btn-close-modal" onclick="closeAddCourseModal()">✕</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label class="form-label">课程名称 <span class="req">*</span></label>
+                <input type="text" class="form-input" id="newCourseName" placeholder="例如：精益现场改善实操">
+            </div>
+            <div class="form-group">
+                <label class="form-label">课程类别 <span class="req">*</span></label>
+                <select class="form-select" id="newCourseCategory">
+                    <option value="工程技术">工程技术</option>
+                    <option value="生产运营">生产运营</option>
+                    <option value="通用能力">通用能力</option>
+                    <option value="一线管理">一线管理</option>
+                    <option value="商务">商务</option>
+                    <option value="领导力">领导力</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">认证讲师姓名 <span class="req">*</span></label>
+                <input type="text" class="form-input" id="newCourseTrainer" placeholder="请输入认证讲师真实姓名（如：李建国）">
+            </div>
+            <div class="form-group">
+                <label class="form-label">是否年度计划 <span class="req">*</span></label>
+                <select class="form-select" id="newCourseIsAnnual">
+                    <option value="是">是</option>
+                    <option value="否" selected>否</option>
+                </select>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeAddCourseModal()">取消</button>
+            <button class="btn btn-primary" onclick="submitAddCourse()">保存课程</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL: BATCH IMPORT COURSES (4 COLUMNS) -->
+<div class="modal-backdrop" id="modalBatchImport">
+    <div class="modal-window" style="max-width:700px;">
+        <div class="modal-header">
+            <div>
+                <h3>⬆ 批量导入课程 (4列：课程名称 / 课程类别 / 认证讲师 / 是否年度计划)</h3>
+                <p style="font-size:11px; color:var(--text-muted); margin-top:2px;">支持从 Excel 复制 4 列，或上传标准 CSV 文件</p>
+            </div>
+            <button class="btn-close-modal" onclick="closeBatchImportModal()">✕</button>
+        </div>
+        <div class="modal-body">
+            <div style="display:flex; gap:10px; margin-bottom:14px; border-bottom:1px solid var(--border); padding-bottom:10px;">
+                <button class="btn btn-subtle btn-sm" id="tabImportPaste" onclick="switchImportTab('paste')">📋 直接粘贴表格文本</button>
+                <button class="btn btn-secondary btn-sm" id="tabImportFile" onclick="switchImportTab('file')">📁 上传 CSV 文件</button>
+                <div style="flex:1;"></div>
+                <button class="btn btn-secondary btn-sm" onclick="downloadCourseCsvTemplate()">📥 下载4列模板</button>
+            </div>
+
+            <div id="importPanePaste">
+                <div class="form-group">
+                    <label class="form-label">从 Excel 复制 4 列并粘贴在此处：</label>
+                    <textarea class="form-textarea" id="importPasteContent" style="height:140px; font-family:monospace; font-size:11px;" placeholder="课程名称	课程类别	认证讲师	是否年度计划
+精益现场改善实操	生产运营	李建华	是
+结构化思维与表达	通用能力	陈雅楠	是
+商务谈判技巧与合同	商务	王志成	否"></textarea>
+                </div>
+            </div>
+
+            <div id="importPaneFile" style="display:none;">
+                <div style="border:2px dashed var(--border); border-radius:var(--radius-md); padding:28px; text-align:center; background:var(--bg-page); cursor:pointer;" onclick="document.getElementById('csvFileInput').click()">
+                    <div style="font-size:24px; margin-bottom:6px;">📁</div>
+                    <div style="font-size:13px; font-weight:600; color:var(--text-main);">点击选择或拖拽课程 CSV 文件</div>
+                    <input type="file" id="csvFileInput" accept=".csv, .txt" style="display:none;" onchange="handleFileSelected(event)">
+                </div>
+                <div id="selectedFileName" style="font-size:11px; color:var(--primary); font-weight:600; margin-top:6px; text-align:center;"></div>
+            </div>
+
+            <div style="margin-top:10px; display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:11px; color:var(--text-muted);">类别：工程技术、生产运营、通用能力、一线管理、商务、领导力</span>
+                <button class="btn btn-secondary btn-sm" onclick="parseAndPreviewImport()">🔍 解析并校验数据</button>
+            </div>
+
+            <div id="importPreviewArea" style="margin-top:14px; display:none;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                    <span style="font-size:12px; font-weight:700;">预览结果：<span id="previewCountBadge" style="color:var(--primary);">0</span> 门课程</span>
+                </div>
+                <div style="max-height:150px; overflow-y:auto; border:1px solid var(--border); border-radius:var(--radius-sm);">
+                    <table class="data-table" style="font-size:11px;">
+                        <thead>
+                            <tr>
+                                <th>课程名称</th>
+                                <th>课程类别</th>
+                                <th>认证讲师</th>
+                                <th>是否年度计划</th>
+                            </tr>
+                        </thead>
+                        <tbody id="importPreviewTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeBatchImportModal()">取消</button>
+            <button class="btn btn-primary" id="btnConfirmBatchImport" disabled onclick="executeBatchImport()">确认导入入库 (0)</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL: ADD SINGLE TRAINER (4 COLUMNS) -->
+<div class="modal-backdrop" id="modalAddTrainer">
+    <div class="modal-window" style="max-width:520px;">
+        <div class="modal-header">
+            <h3>＋ 新增内训师资源 (4列规范)</h3>
+            <button class="btn-close-modal" onclick="closeAddTrainerModal()">✕</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label class="form-label">姓名 <span class="req">*</span></label>
+                <input type="text" class="form-input" id="newTrainerName" placeholder="请输入内训师姓名">
+            </div>
+            <div class="form-group">
+                <label class="form-label">所属部门 <span class="req">*</span></label>
+                <input type="text" class="form-input" id="newTrainerDept" placeholder="例如：数字化推进部">
+            </div>
+            <div class="form-group">
+                <label class="form-label">擅长领域 <span class="req">*</span></label>
+                <input type="text" class="form-input" id="newTrainerFields" placeholder="例如：AI协同办公、敏捷技术演进">
+            </div>
+            <div class="form-group">
+                <label class="form-label">已开发课程</label>
+                <input type="text" class="form-input" id="newTrainerCourses" placeholder="例如：AI办公效率实操、Prompt实战指南">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeAddTrainerModal()">取消</button>
+            <button class="btn btn-primary" onclick="submitAddTrainer()">保存内训师</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL: BATCH IMPORT TRAINERS (4 COLUMNS) -->
+<div class="modal-backdrop" id="modalBatchImportTrainer">
+    <div class="modal-window" style="max-width:700px;">
+        <div class="modal-header">
+            <div>
+                <h3>⬆ 批量导入内训师 (4列：姓名 / 所属部门 / 擅长领域 / 已开发课程)</h3>
+                <p style="font-size:11px; color:var(--text-muted); margin-top:2px;">支持从 Excel 复制 4 列，或上传标准 CSV 清单</p>
+            </div>
+            <button class="btn-close-modal" onclick="closeBatchImportTrainerModal()">✕</button>
+        </div>
+        <div class="modal-body">
+            <div style="display:flex; gap:10px; margin-bottom:14px; border-bottom:1px solid var(--border); padding-bottom:10px;">
+                <button class="btn btn-subtle btn-sm" id="tabTrainerPaste" onclick="switchTrainerImportTab('paste')">📋 直接粘贴表格文本</button>
+                <button class="btn btn-secondary btn-sm" id="tabTrainerFile" onclick="switchTrainerImportTab('file')">📁 上传 CSV 文件</button>
+                <div style="flex:1;"></div>
+                <button class="btn btn-secondary btn-sm" onclick="downloadTrainerCsvTemplate()">📥 下载4列模板</button>
+            </div>
+
+            <div id="importTrainerPanePaste">
+                <div class="form-group">
+                    <label class="form-label">从 Excel 复制 4 列并粘贴在此处：</label>
+                    <textarea class="form-textarea" id="importTrainerPasteContent" style="height:140px; font-family:monospace; font-size:11px;" placeholder="姓名	所属部门	擅长领域	已开发课程
+张晓明	数字化推进部	AI协同办公、自动化	AI办公效率提升实战、Prompt工程基础
+李雅楠	生产运营中心	精益改善与5S管理	精益现场改善实战、目视化看板管理
+陈思远	商务与法务部	商务谈判与合同风险	商务谈判技巧与合同博弈"></textarea>
+                </div>
+            </div>
+
+            <div id="importTrainerPaneFile" style="display:none;">
+                <div style="border:2px dashed var(--border); border-radius:var(--radius-md); padding:28px; text-align:center; background:var(--bg-page); cursor:pointer;" onclick="document.getElementById('csvTrainerFileInput').click()">
+                    <div style="font-size:24px; margin-bottom:6px;">📁</div>
+                    <div style="font-size:13px; font-weight:600; color:var(--text-main);">点击选择或拖拽内训师 CSV 文件</div>
+                    <input type="file" id="csvTrainerFileInput" accept=".csv, .txt" style="display:none;" onchange="handleTrainerFileSelected(event)">
+                </div>
+                <div id="selectedTrainerFileName" style="font-size:11px; color:var(--primary); font-weight:600; margin-top:6px; text-align:center;"></div>
+            </div>
+
+            <div style="margin-top:10px; display:flex; justify-content:flex-end;">
+                <button class="btn btn-secondary btn-sm" onclick="parseAndPreviewTrainerImport()">🔍 解析并校验讲师数据</button>
+            </div>
+
+            <div id="importTrainerPreviewArea" style="margin-top:14px; display:none;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                    <span style="font-size:12px; font-weight:700;">预览结果：<span id="previewTrainerCountBadge" style="color:var(--primary);">0</span> 位内训师</span>
+                </div>
+                <div style="max-height:150px; overflow-y:auto; border:1px solid var(--border); border-radius:var(--radius-sm);">
+                    <table class="data-table" style="font-size:11px;">
+                        <thead>
+                            <tr>
+                                <th>姓名</th>
+                                <th>所属部门</th>
+                                <th>擅长领域</th>
+                                <th>已开发课程</th>
+                            </tr>
+                        </thead>
+                        <tbody id="importTrainerPreviewTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeBatchImportTrainerModal()">取消</button>
+            <button class="btn btn-primary" id="btnConfirmBatchTrainerImport" disabled onclick="executeBatchTrainerImport()">确认导入入库 (0)</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL: RESOURCE DETAIL -->
+<div class="modal-backdrop" id="modalDetail">
+    <div class="modal-window" style="max-width:540px;">
+        <div class="modal-header">
+            <h3 id="detailModalTitle">详情</h3>
+            <button class="btn-close-modal" onclick="closeDetailModal()">✕</button>
+        </div>
+        <div class="modal-body" id="detailModalBody"></div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeDetailModal()">关闭</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL: ADMIN AUTH -->
+<div class="modal-backdrop" id="modalAdminAuth">
+    <div class="modal-window" style="max-width:400px;">
+        <div class="modal-header">
+            <div>
+                <h3>🔒 管理员身份验证</h3>
+                <p style="font-size:11px; color:var(--text-muted); margin-top:2px;">需求驾驶舱需 HR 管理者口令</p>
+            </div>
+            <button class="btn-close-modal" onclick="closeAdminAuthModal()">✕</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label class="form-label">请输入管理员口令 <span class="req">*</span></label>
+                <input type="password" class="form-input" id="adminPasswordInput" placeholder="请输入管理员口令" onkeydown="if(event.key==='Enter') verifyAdminPassword()">
+                <div class="error-tip" id="errAdminPassword">口令不正确，请重试</div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeAdminAuthModal()">取消</button>
+            <button class="btn btn-primary" onclick="verifyAdminPassword()">验证并解锁</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL: CONFIRM WITHDRAWAL -->
+<div class="modal-backdrop" id="modalConfirmWithdraw">
+    <div class="modal-window" style="max-width:420px;">
+        <div class="modal-header">
+            <h3>确认撤回 / 删除该需求？</h3>
+            <button class="btn-close-modal" onclick="closeConfirmWithdrawModal()">✕</button>
+        </div>
+        <div class="modal-body">
+            <p style="font-size:13px; color:var(--text-sub); line-height:1.6;" id="withdrawConfirmText">
+                撤回后本条提报将从列表中移除，云端状态将同步标记。
+            </p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeConfirmWithdrawModal()">取消</button>
+            <button class="btn btn-danger" id="btnConfirmDeleteAction">确认撤回并删除</button>
+        </div>
+    </div>
+</div>
+
+<div class="toast-shelf" id="toastShelf"></div>
+
+<script>
+function handleLogoError(imgEl) {
+    if (!imgEl) return;
+    imgEl.style.display = 'none';
+    const fallback = document.getElementById('fallbackBrandBadge');
+    if (fallback) fallback.style.display = 'flex';
+}
+
+const STORAGE_KEYS = {
+    REQUESTS: "training_center_requests",
+    COURSES: "training_center_courses",
+    TRAINERS: "training_center_trainers"
+};
+
+function getRequests(){
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.REQUESTS) || "[]"); } catch(e) { return []; }
+}
+function setRequests(list){
+    localStorage.setItem(STORAGE_KEYS.REQUESTS, JSON.stringify(list));
+    updateGlobalBadgesAndCockpit();
+}
+
+function getCourses(){
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.COURSES) || "[]"); } catch(e) { return []; }
+}
+function setCourses(list){
+    localStorage.setItem(STORAGE_KEYS.COURSES, JSON.stringify(list));
+    updateGlobalBadgesAndCockpit();
+}
+
+function getTrainers(){
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEYS.TRAINERS) || "[]"); } catch(e) { return []; }
+}
+function setTrainers(list){
+    localStorage.setItem(STORAGE_KEYS.TRAINERS, JSON.stringify(list));
+    updateGlobalBadgesAndCockpit();
+}
+
+/* Wizard Draft State */
+let wizardStep = 1;
+let draftDemand = {
+    theme: "",
+    scenario: "",
+    category: "",
+    audience: "",
+    headcount: "",
+    department: "",
+    method: "",
+    timeline: "1个月内",
+    additional: ""
+};
+
+let activeDiagnosisResult = null;
+let parsedImportCourses = [];
+let currentImportTab = 'paste';
+let parsedImportTrainers = [];
+let currentTrainerImportTab = 'paste';
+
+/* Google Apps Script 自动化云端同步接口 */
+const GAS_WEB_APP_URL = "https://script.google.com/a/macros/rrd.com/s/AKfycby1hTF9rpdhjYjxOAmSahYtwae00CHS8jkup_6baiYZeJUyAiDdm6KU8aUn5pMAOZei/exec";
+
+/* Admin Auth State */
+const ADMIN_STORAGE_KEY = "training_center_admin_auth";
+const ADMIN_PASSWORD_HASH = "RRD123456";
+let isAdminAuthenticated = sessionStorage.getItem(ADMIN_STORAGE_KEY) === "true";
+let pendingWithdrawRequestId = null;
+
+function syncResourcesFromGoogleSheet(isManualTrigger) {
+    if (!GAS_WEB_APP_URL) return;
+    const statusText = document.getElementById("cloudSyncStatusText");
+    if (statusText) statusText.innerText = "云端同步中...";
+    if (isManualTrigger) showToast("正在从 Google 表格同步最新知识库...");
+
+    const fetchUrl = GAS_WEB_APP_URL + "?action=getResources&_t=" + Date.now();
+    fetch(fetchUrl)
+        .then(response => response.json())
+        .then(data => {
+            handleCloudResourcesLoaded(data, isManualTrigger);
+        })
+        .catch(err => {
+            loadResourcesViaJsonp(isManualTrigger);
+        });
+}
+
+function loadResourcesViaJsonp(isManualTrigger) {
+    const callbackName = "onCloudResourcesLoaded_" + Date.now();
+    window[callbackName] = function(data) {
+        handleCloudResourcesLoaded(data, isManualTrigger);
+        delete window[callbackName];
+        if (script.parentNode) script.parentNode.removeChild(script);
+    };
+
+    const script = document.createElement("script");
+    script.src = GAS_WEB_APP_URL + "?action=getResources&callback=" + callbackName + "&_t=" + Date.now();
+    script.onerror = function() {
+        const statusText = document.getElementById("cloudSyncStatusText");
+        if (statusText) statusText.innerText = "云端离线 (本地模式)";
+        if (isManualTrigger) showToast("云端连接超时，已保持当前本地数据。");
+    };
+    document.body.appendChild(script);
+}
+
+function handleCloudResourcesLoaded(data, isManualTrigger) {
+    if (!data || data.status !== "success") return;
+
+    if (Array.isArray(data.courses) && data.courses.length > 0) {
+        setCourses(data.courses);
+    }
+    if (Array.isArray(data.trainers) && data.trainers.length > 0) {
+        setTrainers(data.trainers);
+    }
+
+    const cCount = (data.courses || []).length;
+    const tCount = (data.trainers || []).length;
+    const statusText = document.getElementById("cloudSyncStatusText");
+    if (statusText) {
+        statusText.innerText = `云端已同步 (${cCount}门课 · ${tCount}位讲师)`;
+        statusText.style.color = "var(--success)";
+    }
+
+    updateGlobalBadgesAndCockpit();
+
+    const activePage = document.querySelector('.nav-item.active')?.dataset.page;
+    if (activePage === 'courses') renderCourseCatalog();
+    if (activePage === 'trainers') renderTrainerCatalog();
+
+    if (isManualTrigger) {
+        showToast(`✓ 云端知识库同步成功！现有 ${cCount} 门课程、${tCount} 位内训师。`);
+    }
+}
+
+function syncDemandToGoogleSheet(record) {
+    if (!GAS_WEB_APP_URL) return;
+    const payloadStr = JSON.stringify(record);
+    const statusText = document.getElementById("cloudSyncStatusText");
+    if(statusText) statusText.innerText = "正在同步至云端...";
+
+    fetch(GAS_WEB_APP_URL, {
+        method: "POST",
+        mode: "no-cors",
+        cache: "no-cache",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: payloadStr
+    })
+    .then(() => {
+        showToast("✓ 需求已提交并同步云端 Google 表格！");
+        if(statusText) statusText.innerText = "最新数据已同步";
+    })
+    .catch(err => {});
+
+    try {
+        const probeImg = new Image();
+        probeImg.src = GAS_WEB_APP_URL + "?data=" + encodeURIComponent(payloadStr) + "&_t=" + Date.now();
+    } catch(e) {}
+}
+
+const PAGE_INFOS = {
+    home: { title: "善学乐享｜培训需求智能中心", desc: "从员工真实需求出发，让已有课程、内训师与培训计划更精准" },
+    submit: { title: "提交培训需求", desc: "不用想得太专业，把真实的问题告诉我们就可以" },
+    mine: { title: "我的培训需求", desc: "查看自己提交过的需求和AI分析结果" },
+    courses: { title: "课程资源", desc: "浏览已有课程，找到适合自己的学习资源" },
+    trainers: { title: "内训师资源", desc: "找到懂业务、懂实践、愿意分享的内部专家" },
+    pool: { title: "课程开发池", desc: "汇总现有资源无法充分覆盖的员工培训需求" },
+    dashboard: { title: "需求驾驶舱", desc: "从员工真实需求中发现培训重点和课程开发机会" }
+};
+
+function navigateTo(pageId){
+    if(pageId === 'dashboard' && !isAdminAuthenticated){
+        openAdminAuthModal();
+        return;
+    }
+
+    document.querySelectorAll('.page-view').forEach(view => view.classList.remove('active'));
+    const target = document.getElementById('view-' + pageId);
+    if(target) target.classList.add('active');
+
+    document.querySelectorAll('.nav-item').forEach(item => {
+        if(item.dataset.page === pageId){
+            item.classList.add('active');
+        } else {
+            item.classList.remove('active');
+        }
+    });
+
+    if(PAGE_INFOS[pageId]){
+        document.getElementById('topbarTitle').innerText = PAGE_INFOS[pageId].title;
+        document.getElementById('topbarDesc').innerText = PAGE_INFOS[pageId].desc;
+    }
+
+    if(pageId === 'home') renderHomeView();
+    if(pageId === 'mine') renderMineView();
+    if(pageId === 'courses') renderCourseCatalog();
+    if(pageId === 'trainers') renderTrainerCatalog();
+    if(pageId === 'pool') renderPoolView();
+    if(pageId === 'dashboard') recalculateDashboard();
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => {
+        navigateTo(item.dataset.page);
+    });
+});
+
+function updateAdminUI(){
+    const badge = document.getElementById('currentUserRoleBadge');
+    const toggleBtn = document.getElementById('btnToggleAdminAuth');
+    const lockBadge = document.getElementById('badgeAdminLock');
+    const avatar = document.getElementById('avatarRoleIcon');
+
+    if(isAdminAuthenticated){
+        if(badge) {
+            badge.innerText = "HR 管理员 (已授权)";
+            badge.style.color = "var(--primary)";
+        }
+        if(toggleBtn) toggleBtn.innerText = "🔒 锁定退出管理员";
+        if(lockBadge) {
+            lockBadge.style.background = "#dcfce7";
+            lockBadge.style.color = "#15803d";
+            lockBadge.innerText = "✓ 已解锁";
+        }
+        if(avatar) {
+            avatar.innerText = "HR";
+            avatar.style.background = "#2563eb";
+            avatar.style.color = "#ffffff";
+        }
+    } else {
+        if(badge) {
+            badge.innerText = "员工视图";
+            badge.style.color = "var(--text-main)";
+        }
+        if(toggleBtn) toggleBtn.innerText = "🔑 切换管理员视图";
+        if(lockBadge) {
+            lockBadge.style.background = "#fee2e2";
+            lockBadge.style.color = "#dc2626";
+            lockBadge.innerText = "🔒 需密码";
+        }
+        if(avatar) {
+            avatar.innerText = "U";
+            avatar.style.background = "#dbeafe";
+            avatar.style.color = "var(--primary)";
+        }
+    }
+}
+
+function handleAdminAuthToggle(){
+    if(isAdminAuthenticated){
+        isAdminAuthenticated = false;
+        sessionStorage.removeItem(ADMIN_STORAGE_KEY);
+        updateAdminUI();
+        showToast("已退出管理员视图，切换为普通员工状态。");
+        const currentActive = document.querySelector('.nav-item.active');
+        if(currentActive && currentActive.dataset.page === 'dashboard'){
+            navigateTo('home');
+        }
+    } else {
+        openAdminAuthModal();
+    }
+}
+
+function openAdminAuthModal(){
+    document.getElementById('adminPasswordInput').value = "";
+    document.getElementById('errAdminPassword').classList.remove('show');
+    document.getElementById('modalAdminAuth').classList.add('show');
+    setTimeout(() => {
+        document.getElementById('adminPasswordInput').focus();
+    }, 100);
+}
+
+function closeAdminAuthModal(){
+    document.getElementById('modalAdminAuth').classList.remove('show');
+}
+
+function verifyAdminPassword(){
+    const val = document.getElementById('adminPasswordInput').value.trim();
+    const err = document.getElementById('errAdminPassword');
+    if(val === ADMIN_PASSWORD_HASH){
+        isAdminAuthenticated = true;
+        sessionStorage.setItem(ADMIN_STORAGE_KEY, "true");
+        updateAdminUI();
+        closeAdminAuthModal();
+        showToast("✓ 管理员身份验证通过！已解锁管理者看板。");
+        navigateTo('dashboard');
+    } else {
+        err.classList.add('show');
+    }
+}
+
+function setupRadioTiles(){
+    document.querySelectorAll('.radio-tile').forEach(tile => {
+        tile.addEventListener('click', () => {
+            const group = tile.dataset.group;
+            const val = tile.dataset.val;
+            document.querySelectorAll(`.radio-tile[data-group="${group}"]`).forEach(t => t.classList.remove('selected'));
+            tile.classList.add('selected');
+            draftDemand[group] = val;
+        });
+    });
+}
+
+function collectWizardInputs(){
+    draftDemand.theme = document.getElementById('inputTheme').value.trim();
+    draftDemand.scenario = document.getElementById('inputScenario').value.trim();
+    draftDemand.headcount = document.getElementById('selectHeadcount').value;
+    draftDemand.department = document.getElementById('inputDepartment').value.trim();
+    draftDemand.timeline = document.getElementById('selectTimeline').value;
+    draftDemand.additional = document.getElementById('inputAdditional').value.trim();
+}
+
+function validateWizardStep(step){
+    collectWizardInputs();
+    let valid = true;
+
+    if(step === 1){
+        const errTheme = document.getElementById('errTheme');
+        const errScenario = document.getElementById('errScenario');
+        const errCategory = document.getElementById('errCategory');
+
+        if(!draftDemand.theme){ errTheme.classList.add('show'); valid = false; } else { errTheme.classList.remove('show'); }
+        if(!draftDemand.scenario){ errScenario.classList.add('show'); valid = false; } else { errScenario.classList.remove('show'); }
+        if(!draftDemand.category){ errCategory.classList.add('show'); valid = false; } else { errCategory.classList.remove('show'); }
+    } else if(step === 2){
+        const errAud = document.getElementById('errAudience');
+        const errHead = document.getElementById('errHeadcount');
+
+        if(!draftDemand.audience){ errAud.classList.add('show'); valid = false; } else { errAud.classList.remove('show'); }
+        if(!draftDemand.headcount){ errHead.classList.add('show'); valid = false; } else { errHead.classList.remove('show'); }
+    } else if(step === 3){
+        const errMethod = document.getElementById('errMethod');
+        if(!draftDemand.method){ errMethod.classList.add('show'); valid = false; } else { errMethod.classList.remove('show'); }
+    }
+    return valid;
+}
+
+function stepWizard(delta){
+    if(delta > 0){
+        if(!validateWizardStep(wizardStep)) return;
+        if(wizardStep < 4){
+            wizardStep++;
+            updateWizardDisplay();
+            if(wizardStep === 4) renderWizardSummary();
+        } else {
+            openAIModal();
+        }
+    } else {
+        if(wizardStep > 1){
+            wizardStep--;
+            updateWizardDisplay();
+        }
+    }
+}
+
+function updateWizardDisplay(){
+    for(let i = 1; i <= 4; i++){
+        const pane = document.getElementById('paneStep' + i);
+        const node = document.getElementById('wizardNode' + i);
+
+        if(i === wizardStep){
+            pane.classList.add('active');
+            node.className = "wizard-step-node active";
+        } else if(i < wizardStep){
+            pane.classList.remove('active');
+            node.className = "wizard-step-node done";
+        } else {
+            pane.classList.remove('active');
+            node.className = "wizard-step-node";
+        }
+    }
+
+    const prevBtn = document.getElementById('btnPrevStep');
+    const nextBtn = document.getElementById('btnNextStep');
+
+    prevBtn.style.display = (wizardStep === 1) ? "none" : "block";
+    if(wizardStep === 4){
+        nextBtn.innerHTML = "提交并获取AI分析";
+    } else {
+        nextBtn.innerHTML = "下一步 →";
+    }
+}
+
+function renderWizardSummary(){
+    collectWizardInputs();
+    const container = document.getElementById('summaryReviewContent');
+    container.innerHTML = `
+        <div class="summary-grid">
+            <div class="summary-field">
+                <div class="summary-label">培训主题</div>
+                <div class="summary-val">${escapeHtml(draftDemand.theme)}</div>
+            </div>
+            <div class="summary-field">
+                <div class="summary-label">需求类别</div>
+                <div class="summary-val">${escapeHtml(draftDemand.category)}</div>
+            </div>
+            <div class="summary-field">
+                <div class="summary-label">受益人群 / 人数</div>
+                <div class="summary-val">${escapeHtml(draftDemand.audience)} · ${escapeHtml(draftDemand.headcount)}</div>
+            </div>
+            <div class="summary-field">
+                <div class="summary-label">学习方式 / 时效</div>
+                <div class="summary-val">${escapeHtml(draftDemand.method)} · ${escapeHtml(draftDemand.timeline)}</div>
+            </div>
+            <div class="summary-field">
+                <div class="summary-label">所属部门</div>
+                <div class="summary-val">${escapeHtml(draftDemand.department || "未填写")}</div>
+            </div>
+            <div class="summary-field">
+                <div class="summary-label">其他补充</div>
+                <div class="summary-val">${escapeHtml(draftDemand.additional || "无")}</div>
+            </div>
+        </div>
+        <div class="summary-quote">
+            <div style="font-size:10px; font-weight:700; color:var(--text-muted); margin-bottom:4px; text-transform:uppercase;">具体问题 / 场景描述</div>
+            ${escapeHtml(draftDemand.scenario)}
+        </div>
+    `;
+}
+
+function resetWizardForm(){
+    draftDemand = {
+        theme: "",
+        scenario: "",
+        category: "",
+        audience: "",
+        headcount: "",
+        department: "",
+        method: "",
+        timeline: "1个月内",
+        additional: ""
+    };
+    document.getElementById('inputTheme').value = "";
+    document.getElementById('inputScenario').value = "";
+    document.getElementById('selectHeadcount').value = "";
+    document.getElementById('inputDepartment').value = "";
+    document.getElementById('selectTimeline').value = "1个月内";
+    document.getElementById('inputAdditional').value = "";
+    document.querySelectorAll('.radio-tile').forEach(t => t.classList.remove('selected'));
+    document.querySelectorAll('.error-tip').forEach(e => e.classList.remove('show'));
+
+    wizardStep = 1;
+    updateWizardDisplay();
+}
+
+function openAIModal(){
+    collectWizardInputs();
+    const modal = document.getElementById('modalAI');
+    const loadingStage = document.getElementById('aiLoadingStage');
+    const resultStage = document.getElementById('aiResultStage');
+
+    modal.classList.add('show');
+    loadingStage.style.display = "block";
+    resultStage.style.display = "none";
+
+    const checks = [
+        document.getElementById('aiCheck1'),
+        document.getElementById('aiCheck2'),
+        document.getElementById('aiCheck3'),
+        document.getElementById('aiCheck4'),
+        document.getElementById('aiCheck5')
+    ];
+
+    checks.forEach(c => {
+        c.className = "ai-step-check-item";
+        c.innerHTML = "○ " + c.innerText.replace(/^[○✓▶]\s*/, "");
+    });
+
+    let currentCheck = 0;
+    const interval = setInterval(() => {
+        if(currentCheck < checks.length){
+            if(currentCheck > 0){
+                checks[currentCheck - 1].className = "ai-step-check-item done";
+                checks[currentCheck - 1].innerHTML = "✓ " + checks[currentCheck - 1].innerText.replace(/^[○✓▶]\s*/, "");
+            }
+            checks[currentCheck].className = "ai-step-check-item in-progress";
+            checks[currentCheck].innerHTML = "▶ " + checks[currentCheck].innerText.replace(/^[○✓▶]\s*/, "");
+            currentCheck++;
+        }
+    }, 280);
+
+    setTimeout(() => {
+        clearInterval(interval);
+        checks.forEach(c => {
+            c.className = "ai-step-check-item done";
+            c.innerHTML = "✓ " + c.innerText.replace(/^[○✓▶]\s*/, "");
+        });
+
+        executeAIDiagnosis();
+        loadingStage.style.display = "none";
+        resultStage.style.display = "block";
+    }, 1500);
+}
+
+function closeAIModal(){
+    document.getElementById('modalAI').classList.remove('show');
+}
+
+function executeAIDiagnosis(){
+    const textCorpus = (draftDemand.theme + " " + draftDemand.scenario + " " + draftDemand.category).toLowerCase();
+    const allCourses = getCourses();
+    const allTrainers = getTrainers();
+
+    let coreProblem = "";
+    if(draftDemand.scenario && draftDemand.scenario.length >= 10){
+        coreProblem = draftDemand.scenario;
+    } else if(draftDemand.theme){
+        coreProblem = `员工面临聚焦于【${draftDemand.theme}】的业务卡点。当前需求描述较少，建议补充具体工作场景、遇到的困难和期望达到的结果。`;
+    } else {
+        coreProblem = "当前需求描述较少，建议补充具体工作场景、遇到的困难和期望达到的结果。";
+    }
+
+    let tags = [];
+    const keywordTaxonomy = [
+        { word: "ai", tag: "AI工具应用" },
+        { word: "自动化", tag: "自动化提效" },
+        { word: "效率", tag: "工作效率提升" },
+        { word: "管理", tag: "团队管理" },
+        { word: "班组", tag: "班组长技能" },
+        { word: "沟通", tag: "管理沟通与协作" },
+        { word: "协作", tag: "跨部门协同" },
+        { word: "工艺", tag: "工艺改善" },
+        { word: "质量", tag: "质量管控" },
+        { word: "设备", tag: "设备维护" },
+        { word: "精益", tag: "精益改善" },
+        { word: "商务", tag: "商务谈判" },
+        { word: "复盘", tag: "结构化复盘" },
+        { word: "数据", tag: "数据分析" }
+    ];
+
+    keywordTaxonomy.forEach(item => {
+        if(textCorpus.includes(item.word)){
+            tags.push(item.tag);
+        }
+    });
+
+    if(draftDemand.category && !tags.includes(draftDemand.category)){
+        tags.push(draftDemand.category);
+    }
+    tags = Array.from(new Set(tags));
+
+    const scoredCourses = [];
+    allCourses.forEach(c => {
+        const cText = (c.name + " " + (c.trainer || "") + " " + c.category).toLowerCase();
+        let matchScore = 0;
+        if(c.category === draftDemand.category) matchScore += 40;
+        keywordTaxonomy.forEach(item => {
+            if(textCorpus.includes(item.word) && cText.includes(item.word)){
+                matchScore += 25;
+            }
+        });
+        if(draftDemand.theme && c.name.toLowerCase().includes(draftDemand.theme.toLowerCase())) matchScore += 35;
+        if(matchScore > 100) matchScore = 98;
+        // 提高匹配门槛：得分达到 50% 以上才纳入匹配
+        if(matchScore >= 50){
+            scoredCourses.push({ course: c, score: matchScore });
+        }
+    });
+    scoredCourses.sort((a,b) => b.score - a.score);
+    // 限制最多只保留前 3 个最高匹配课程
+    const topMatchedCourses = scoredCourses.slice(0, 3);
+
+    const scoredTrainers = [];
+    allTrainers.forEach(t => {
+        const tText = (t.name + " " + t.department + " " + (t.fields || "") + " " + (t.courses || "")).toLowerCase();
+        let matchScore = 0;
+        keywordTaxonomy.forEach(item => {
+            if(textCorpus.includes(item.word) && tText.includes(item.word)){
+                matchScore += 30;
+            }
+        });
+        if(draftDemand.department && t.department && t.department.toLowerCase().includes(draftDemand.department.toLowerCase())){
+            matchScore += 25;
+        }
+        if(matchScore > 100) matchScore = 96;
+        // 提高匹配门槛：得分达到 50% 以上才纳入匹配
+        if(matchScore >= 50){
+            scoredTrainers.push({ trainer: t, score: matchScore });
+        }
+    });
+    scoredTrainers.sort((a,b) => b.score - a.score);
+    // 限制最多只保留前 3 位最高匹配讲师
+    const topMatchedTrainers = scoredTrainers.slice(0, 3);
+
+    let coverageType = "red";
+    let coverageText = "";
+    const hasStrongCourse = topMatchedCourses.length > 0 && topMatchedCourses[0].score >= 60;
+    const hasTrainer = topMatchedTrainers.length > 0;
+
+    if(hasStrongCourse && hasTrainer){
+        coverageType = "green";
+        coverageText = "现有课程和内训师资源可以较好满足该需求，建议优先使用已有资源。";
+    } else if(topMatchedCourses.length > 0 || hasTrainer){
+        coverageType = "amber";
+        coverageText = "已有资源可以解决部分需求，但仍存在业务场景或师资覆盖缺口。";
+    } else {
+        coverageType = "red";
+        coverageText = "当前课程库和内训师库中暂无高度匹配内容，建议进入课程开发池。";
+    }
+
+    activeDiagnosisResult = {
+        coreProblem,
+        tags,
+        matchedCourses: topMatchedCourses,
+        matchedTrainers: topMatchedTrainers,
+        coverageType,
+        coverageText
+    };
+
+    renderAIDiagnosisDOM();
+}
+
+function renderAIDiagnosisDOM(){
+    const res = activeDiagnosisResult;
+    document.getElementById('diagCoreProblem').innerText = res.coreProblem;
+
+    const tagsBox = document.getElementById('diagCapabilityTagsWrap');
+    if(res.tags.length > 0){
+        tagsBox.innerHTML = res.tags.map(t => `<span class="card-top-tag"># ${escapeHtml(t)}</span>`).join("");
+    } else {
+        tagsBox.innerHTML = `<span style="font-size:12px; color:var(--text-muted);">暂未识别出明确能力标签。</span>`;
+    }
+
+    const courseBox = document.getElementById('diagMatchedCoursesList');
+    if(res.matchedCourses.length > 0){
+        courseBox.innerHTML = res.matchedCourses.map(item => {
+            let trName = item.course.trainer;
+            let isAnn = (item.course.isAnnualPlan === true || item.course.isAnnualPlan === "是" || String(item.course.isAnnualPlan).includes("是")) ? "是" : "否";
+            if(trName === "是" || trName === "否"){
+                isAnn = trName;
+                trName = "暂未指定";
+            }
+            if(!trName) trName = "暂未指定";
+
+            return `
+            <div class="funnel-row" style="margin-bottom:8px;">
+                <div>
+                    <div style="font-size:12px; font-weight:700; color:var(--text-main);">${escapeHtml(item.course.name)}</div>
+                    <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">
+                        ${escapeHtml(item.course.category)} · 认证讲师：<strong style="color:var(--text-main);">${escapeHtml(trName)}</strong> · 年度计划：${isAnn}
+                    </div>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <span style="font-size:12px; font-weight:700; color:var(--primary);">${item.score}% 匹配</span>
+                    <button class="btn btn-secondary btn-sm" onclick="showCourseDetailsById('${item.course.id}')">查看</button>
+                </div>
+            </div>
+            `;
+        }).join("");
+    } else {
+        courseBox.innerHTML = `
+            <div style="padding:12px; background:var(--bg-page); border:1px solid var(--border); border-radius:var(--radius-sm); font-size:11px; color:var(--text-muted);">
+                当前课程库中暂无高度匹配内容。建议归集至课程开发池。
+            </div>
+        `;
+    }
+
+    const trainerBox = document.getElementById('diagMatchedTrainersList');
+    if(res.matchedTrainers.length > 0){
+        trainerBox.innerHTML = res.matchedTrainers.map(item => {
+            const courseNames = getTrainerCourseNames(item.trainer);
+            return `
+            <div class="funnel-row" style="margin-bottom:8px;">
+                <div>
+                    <div style="font-size:12px; font-weight:700; color:var(--text-main);">${escapeHtml(item.trainer.name)} <span style="font-weight:normal; font-size:11px; color:var(--text-muted);">(${escapeHtml(item.trainer.department)})</span></div>
+                    <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">
+                        擅长领域：${escapeHtml(item.trainer.fields)} · 已开发课程：${escapeHtml(courseNames)}
+                    </div>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <span style="font-size:12px; font-weight:700; color:var(--primary);">${item.score}% 适配</span>
+                    <button class="btn btn-secondary btn-sm" onclick="showTrainerDetailsById('${item.trainer.id}')">查看</button>
+                </div>
+            </div>
+            `;
+        }).join("");
+    } else {
+        trainerBox.innerHTML = `
+            <div style="padding:12px; background:var(--bg-page); border:1px solid var(--border); border-radius:var(--radius-sm); font-size:11px; color:var(--text-muted);">
+                当前暂无内训师资源可匹配。
+            </div>
+        `;
+    }
+
+    const bannerBox = document.getElementById('diagCoverageBanner');
+    let colorClass = res.coverageType;
+    let titleTxt = res.coverageType === 'green' ? '🟢 已有资源覆盖' : (res.coverageType === 'amber' ? '🟡 部分覆盖' : '🔴 资源缺口');
+
+    bannerBox.className = `coverage-banner ${colorClass}`;
+    bannerBox.innerHTML = `
+        <div style="font-weight:700; font-size:15px;">${res.coverageType === 'green' ? '✓' : (res.coverageType === 'amber' ? '!' : '✕')}</div>
+        <div>
+            <div style="font-size:12px; font-weight:700; margin-bottom:2px;">${titleTxt}</div>
+            <div style="font-size:11px; line-height:1.5;">${res.coverageText}</div>
+        </div>
+    `;
+
+    const footer = document.getElementById('diagModalFooter');
+    if(res.coverageType === 'green'){
+        footer.innerHTML = `
+            <button class="btn btn-secondary" onclick="closeAIModal()">返回修改</button>
+            <button class="btn btn-primary" onclick="confirmFinishSubmission(false)">确认提报并归档</button>
+        `;
+    } else if(res.coverageType === 'amber'){
+        footer.innerHTML = `
+            <button class="btn btn-secondary" onclick="closeAIModal()">返回修改</button>
+            <button class="btn btn-warning" onclick="confirmFinishSubmission(true)">同步加入课程开发池</button>
+            <button class="btn btn-primary" onclick="confirmFinishSubmission(false)">直接提交需求</button>
+        `;
+    } else {
+        footer.innerHTML = `
+            <button class="btn btn-secondary" onclick="closeAIModal()">返回修改</button>
+            <button class="btn btn-warning" onclick="confirmFinishSubmission(true)">确认加入课程开发池</button>
+        `;
+    }
+}
+
+function confirmFinishSubmission(addToPool){
+    const requests = getRequests();
+    const newRecord = {
+        id: "req_" + Date.now(),
+        ...draftDemand,
+        date: new Date().toLocaleDateString("zh-CN"),
+        timestamp: Date.now(),
+        status: addToPool ? "已进入课程开发池" : "AI分析完成",
+        pool: addToPool,
+        aiDiagnosis: {
+            tags: activeDiagnosisResult.tags,
+            coverage: activeDiagnosisResult.coverageType,
+            matchedCourseCount: activeDiagnosisResult.matchedCourses.length,
+            matchedTrainerCount: activeDiagnosisResult.matchedTrainers.length
+        },
+        poolStatus: addToPool ? "待评估" : ""
+    };
+
+    requests.unshift(newRecord);
+    setRequests(requests);
+    syncDemandToGoogleSheet(newRecord);
+
+    closeAIModal();
+    resetWizardForm();
+
+    if(addToPool){
+        showToast("已成功提交并直接列入【课程开发池】！");
+        navigateTo('pool');
+    } else {
+        showToast("需求提交成功！已保存至【我的需求】。");
+        navigateTo('mine');
+    }
+}
+
+function renderHomeView(){
+    const requests = getRequests();
+    const noticeBox = document.getElementById('homeNoticeContainer');
+    if(!noticeBox) return;
+
+    if(requests.length === 0){
+        noticeBox.innerHTML = `
+            <div class="empty-box">
+                <div class="empty-icon">✎</div>
+                <div class="empty-title">当前还没有培训需求</div>
+                <div class="empty-desc">提交第一条需求后，系统会开始生成分析结果，并自动撮合课程、内训师或排期新课。</div>
+                <button class="btn btn-primary btn-sm" onclick="navigateTo('submit')">＋ 提交第一条需求</button>
+            </div>
+        `;
+    } else {
+        noticeBox.innerHTML = `
+            <div class="card" style="padding:18px;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <div style="font-size:13px; font-weight:700; color:var(--text-main);">最近业务需求提报动态</div>
+                        <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">实时收录员工反馈，驱动培训计划精准化</div>
+                    </div>
+                    <button class="btn btn-secondary btn-sm" onclick="navigateTo('mine')">查看我的所有提报 →</button>
+                </div>
+            </div>
+        `;
+    }
+}
+
+function renderMineView(){
+    const requests = getRequests();
+    const container = document.getElementById('mineListContainer');
+
+    if(requests.length === 0){
+        container.innerHTML = `
+            <div class="empty-box">
+                <div class="empty-icon">▣</div>
+                <div class="empty-title">你还没有提交过培训需求</div>
+                <div class="empty-desc">无论是个人的技能卡点，还是团队的业务瓶颈，都可随时提报。</div>
+                <button class="btn btn-primary btn-sm" onclick="navigateTo('submit')">提交第一条需求</button>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = requests.map(req => {
+        let statusBadge = `<span class="status-pill green">✓ ${escapeHtml(req.status)}</span>`;
+        if(req.pool){
+            statusBadge = `<span class="status-pill amber">◇ 课程开发池 (${escapeHtml(req.poolStatus || "待评估")})</span>`;
+        }
+
+        const tags = (req.aiDiagnosis && req.aiDiagnosis.tags) ? req.aiDiagnosis.tags : [];
+
+        return `
+            <div class="card" style="padding:18px; margin-bottom:12px;">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px;">
+                    <div>
+                        <div style="font-size:14px; font-weight:700; color:var(--text-main);">${escapeHtml(req.theme)}</div>
+                        <div style="font-size:11px; color:var(--text-muted); margin-top:4px;">
+                            提报时间：${escapeHtml(req.date)} · 类别：${escapeHtml(req.category)} · 受众：${escapeHtml(req.audience)} (${escapeHtml(req.headcount)})
+                        </div>
+                    </div>
+                    <div>${statusBadge}</div>
+                </div>
+
+                <div class="summary-quote" style="margin:12px 0 10px;">
+                    ${escapeHtml(req.scenario)}
+                </div>
+
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                    <div class="tag-wrap" style="margin-bottom:0;">
+                        ${tags.map(t => `<span class="pill-tag"># ${escapeHtml(t)}</span>`).join("")}
+                    </div>
+                    <div style="display:flex; gap:8px;">
+                        ${!req.pool ? `<button class="btn btn-secondary btn-sm" onclick="transferToPool('${req.id}')">转入开发池</button>` : ''}
+                        <button class="btn btn-secondary btn-sm" style="color:var(--danger); border-color:#fecaca;" onclick="askWithdrawRequest('${req.id}')">
+                            🗑️ 撤回删除
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join("");
+}
+
+function transferToPool(requestId){
+    const requests = getRequests();
+    const req = requests.find(r => r.id === requestId);
+    if(req){
+        req.pool = true;
+        req.status = "已进入课程开发池";
+        req.poolStatus = "待评估";
+        setRequests(requests);
+        showToast("已成功转入课程开发池！");
+        renderMineView();
+    }
+}
+
+function askWithdrawRequest(requestId){
+    const req = getRequests().find(r => r.id === requestId);
+    if(!req) return;
+    pendingWithdrawRequestId = requestId;
+    document.getElementById('withdrawConfirmText').innerText = 
+        `确认要撤回培训需求「${req.theme}」吗？撤回后将从列表中移除。`;
+    
+    document.getElementById('btnConfirmDeleteAction').onclick = function(){
+        executeWithdrawRequest(pendingWithdrawRequestId);
+    };
+    document.getElementById('modalConfirmWithdraw').classList.add('show');
+}
+
+function closeConfirmWithdrawModal(){
+    pendingWithdrawRequestId = null;
+    document.getElementById('modalConfirmWithdraw').classList.remove('show');
+}
+
+function executeWithdrawRequest(requestId){
+    let requests = getRequests();
+    const target = requests.find(r => r.id === requestId);
+    if(!target) return;
+
+    requests = requests.filter(r => r.id !== requestId);
+    setRequests(requests);
+
+    if(GAS_WEB_APP_URL){
+        const withdrawPayload = {
+            id: requestId,
+            theme: target.theme + " [员工已撤回]",
+            status: "已撤回/已删除",
+            date: new Date().toLocaleDateString("zh-CN")
+        };
+        try {
+            const probeImg = new Image();
+            probeImg.src = GAS_WEB_APP_URL + "?data=" + encodeURIComponent(JSON.stringify(withdrawPayload)) + "&_action=withdraw&_t=" + Date.now();
+        } catch(e) {}
+    }
+
+    closeConfirmWithdrawModal();
+    showToast("需求已成功撤回并删除！");
+    renderMineView();
+}
+
+function renderCourseCatalog(){
+    const courses = getCourses();
+    const keyword = (document.getElementById('courseSearchKeyword')?.value || "").toLowerCase().trim();
+    const category = document.getElementById('courseFilterCategory')?.value || "";
+    const container = document.getElementById('courseGridContainer');
+
+    if(courses.length === 0){
+        container.innerHTML = `
+            <div class="empty-box">
+                <div class="empty-icon">▤</div>
+                <div class="empty-title">当前暂无课程资源</div>
+                <div class="empty-desc">支持批量导入 4 列清单：课程名称、课程类别、认证讲师、是否年度计划。</div>
+                <button class="btn btn-primary btn-sm" onclick="openAddCourseModal()">＋ 新增课程</button>
+            </div>
+        `;
+        return;
+    }
+
+    const filtered = courses.filter(c => {
+        const matchKeyword = !keyword ||
+            c.name.toLowerCase().includes(keyword) ||
+            (c.trainer || "").toLowerCase().includes(keyword) ||
+            (c.category || "").toLowerCase().includes(keyword);
+        const matchCat = !category || c.category === category;
+        return matchKeyword && matchCat;
+    });
+
+    if(filtered.length === 0){
+        container.innerHTML = `
+            <div class="empty-box">
+                <div class="empty-title">未搜索到匹配的课程</div>
+                <div class="empty-desc">请尝试调整搜索关键词或类别筛选条件。</div>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = `
+        <div class="resource-grid">
+            ${filtered.map(c => {
+                let trainerDisplay = c.trainer;
+                let isAnnualDisplay = (c.isAnnualPlan === true || c.isAnnualPlan === "是" || String(c.isAnnualPlan).includes("是")) ? "是" : "否";
+                if (trainerDisplay === "是" || trainerDisplay === "否") {
+                    isAnnualDisplay = trainerDisplay;
+                    trainerDisplay = "暂未指定";
+                }
+                if (!trainerDisplay || trainerDisplay.trim() === "") {
+                    trainerDisplay = "暂未指定";
+                }
+
+                return `
+                <div class="resource-card">
+                    <div>
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                            <span class="card-top-tag">${escapeHtml(c.category)}</span>
+                        </div>
+                        <h4 style="margin-bottom:8px;">${escapeHtml(c.name)}</h4>
+                    </div>
+                    <div>
+                        <div class="resource-meta-list">
+                            <div class="resource-meta-item">
+                                <span>认证讲师</span>
+                                <strong style="color:var(--text-main); font-weight:600;">${escapeHtml(trainerDisplay)}</strong>
+                            </div>
+                            <div class="resource-meta-item">
+                                <span>年度计划</span>
+                                <strong style="color:var(--text-main); font-weight:600;">${isAnnualDisplay}</strong>
+                            </div>
+                        </div>
+                        <div class="card-footer-action">
+                            <button class="btn btn-secondary btn-sm" onclick="showCourseDetailsById('${c.id}')">查看详情</button>
+                        </div>
+                    </div>
+                </div>
+            `;}).join("")}
+        </div>
+    `;
+}
+
+function openAddCourseModal(){
+    document.getElementById('newCourseName').value = "";
+    document.getElementById('newCourseTrainer').value = "";
+    document.getElementById('newCourseIsAnnual').value = "否";
+    document.getElementById('modalAddCourse').classList.add('show');
+}
+function closeAddCourseModal(){
+    document.getElementById('modalAddCourse').classList.remove('show');
+}
+
+function submitAddCourse(){
+    const name = document.getElementById('newCourseName').value.trim();
+    if(!name){
+        showToast("请填写课程名称！");
+        return;
+    }
+    const category = document.getElementById('newCourseCategory').value;
+    const trainerInput = document.getElementById('newCourseTrainer').value.trim();
+    if(!trainerInput || trainerInput === "是" || trainerInput === "否"){
+        showToast("请填写认证讲师真实姓名！");
+        return;
+    }
+    const isAnnual = document.getElementById('newCourseIsAnnual').value === "是";
+
+    const courses = getCourses();
+    courses.unshift({
+        id: "course_" + Date.now(),
+        name,
+        category,
+        trainer: trainerInput,
+        isAnnualPlan: isAnnual
+    });
+    setCourses(courses);
+
+    closeAddCourseModal();
+    showToast("课程录入成功！");
+    renderCourseCatalog();
+}
+
+function openBatchImportModal(){
+    parsedImportCourses = [];
+    document.getElementById('importPasteContent').value = "";
+    document.getElementById('selectedFileName').innerText = "";
+    document.getElementById('csvFileInput').value = "";
+    document.getElementById('importPreviewArea').style.display = "none";
+    const btn = document.getElementById('btnConfirmBatchImport');
+    btn.disabled = true;
+    btn.innerText = "确认导入入库 (0)";
+    switchImportTab('paste');
+    document.getElementById('modalBatchImport').classList.add('show');
+}
+function closeBatchImportModal(){
+    document.getElementById('modalBatchImport').classList.remove('show');
+}
+
+function switchImportTab(tab){
+    currentImportTab = tab;
+    const pPaste = document.getElementById('importPanePaste');
+    const pFile = document.getElementById('importPaneFile');
+    const tPaste = document.getElementById('tabImportPaste');
+    const tFile = document.getElementById('tabImportFile');
+
+    if(tab === 'paste'){
+        pPaste.style.display = "block";
+        pFile.style.display = "none";
+        tPaste.className = "btn btn-subtle btn-sm";
+        tFile.className = "btn btn-secondary btn-sm";
+    } else {
+        pPaste.style.display = "none";
+        pFile.style.display = "block";
+        tFile.className = "btn btn-subtle btn-sm";
+        tPaste.className = "btn btn-secondary btn-sm";
+    }
+}
+
+function handleFileSelected(event){
+    const file = event.target.files[0];
+    if(!file) return;
+    document.getElementById('selectedFileName').innerText = "已选择文件: " + file.name;
+    const reader = new FileReader();
+    reader.onload = function(e){
+        document.getElementById('importPasteContent').value = e.target.result;
+        parseAndPreviewImport();
+    };
+    reader.readAsText(file, "UTF-8");
+}
+
+function downloadCourseCsvTemplate(){
+    const header = "课程名称,课程类别,认证讲师,是否年度计划\n";
+    const samples = [
+        "精益现场改善实战,生产运营,李建华,是",
+        "结构化思维与汇报表达,通用能力,陈雅楠,是",
+        "商务谈判与合同管控,商务,王志成,否"
+    ].join("\n");
+
+    const blob = new Blob(["\uFEFF" + header + samples], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    link.setAttribute("download", "课程库4列模板.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showToast("4列课程模板下载成功！");
+}
+
+function parseAndPreviewImport(){
+    const rawText = document.getElementById('importPasteContent').value.trim();
+    if(!rawText){
+        showToast("请先粘贴表格内容或选择 CSV 文件！");
+        return;
+    }
+
+    const lines = rawText.split(/\r?\n/).filter(line => line.trim().length > 0);
+    parsedImportCourses = [];
+    const validCategories = ["工程技术", "生产运营", "通用能力", "一线管理", "商务", "领导力"];
+
+    lines.forEach((line, index) => {
+        if(index === 0 && (line.includes("课程名称") || line.includes("类别"))) return;
+
+        let cols = line.includes("\t") ? line.split("\t") : line.split(",");
+        cols = cols.map(s => s.trim().replace(/^["']|["']$/g, ""));
+
+        if(cols.length >= 1 && cols[0]){
+            const name = cols[0];
+            let category = cols[1] || "通用能力";
+            if(!validCategories.includes(category)){
+                const found = validCategories.find(c => category.includes(c));
+                category = found || "通用能力";
+            }
+
+            let val3 = cols[2] || "";
+            let val4 = cols[3] || "";
+            let trainer = "暂未指定";
+            let isAnnual = false;
+
+            const isVal3Bool = /^(是|否|yes|no|true|false)$/i.test(val3);
+            const isVal4Bool = /^(是|否|yes|no|true|false)$/i.test(val4);
+
+            if (isVal3Bool && !isVal4Bool) {
+                isAnnual = /^(是|yes|true)$/i.test(val3);
+                trainer = val4 || "暂未指定";
+            } else {
+                trainer = (!isVal3Bool && val3) ? val3 : "暂未指定";
+                isAnnual = isVal4Bool ? /^(是|yes|true)$/i.test(val4) : (val4.includes("是"));
+            }
+
+            parsedImportCourses.push({
+                id: "course_" + Date.now() + "_" + Math.random().toString(36).substr(2, 4),
+                name,
+                category,
+                trainer,
+                isAnnualPlan: isAnnual
+            });
+        }
+    });
+
+    if(parsedImportCourses.length === 0){
+        showToast("未能识别出有效课程，请检查格式！");
+        return;
+    }
+
+    const tbody = document.getElementById('importPreviewTableBody');
+    tbody.innerHTML = parsedImportCourses.map(c => `
+        <tr>
+            <td style="font-weight:600;">${escapeHtml(c.name)}</td>
+            <td><span class="pill-tag">${escapeHtml(c.category)}</span></td>
+            <td>${escapeHtml(c.trainer)}</td>
+            <td>${c.isAnnualPlan ? "是" : "否"}</td>
+        </tr>
+    `).join("");
+
+    document.getElementById('previewCountBadge').innerText = parsedImportCourses.length;
+    document.getElementById('importPreviewArea').style.display = "block";
+
+    const btn = document.getElementById('btnConfirmBatchImport');
+    btn.disabled = false;
+    btn.innerText = `确认导入入库 (${parsedImportCourses.length})`;
+}
+
+function executeBatchImport(){
+    if(parsedImportCourses.length === 0) return;
+    const existing = getCourses();
+    setCourses([...parsedImportCourses, ...existing]);
+    const count = parsedImportCourses.length;
+    closeBatchImportModal();
+    showToast(`批量导入成功！已入库 ${count} 门课程。`);
+    renderCourseCatalog();
+}
+
+function showCourseDetailsById(id){
+    const course = getCourses().find(c => c.id === id);
+    if(!course) return;
+
+    let trainerDisplay = course.trainer;
+    let isAnnualDisplay = (course.isAnnualPlan === true || course.isAnnualPlan === "是" || String(course.isAnnualPlan).includes("是")) ? "是" : "否";
+    if (trainerDisplay === "是" || trainerDisplay === "否") {
+        isAnnualDisplay = trainerDisplay;
+        trainerDisplay = "暂未指定";
+    }
+    if (!trainerDisplay || trainerDisplay.trim() === "") {
+        trainerDisplay = "暂未指定";
+    }
+
+    document.getElementById('detailModalTitle').innerText = "课程详情 · " + course.name;
+    document.getElementById('detailModalBody').innerHTML = `
+        <div style="display:flex; gap:8px; margin-bottom:12px; align-items:center;">
+            <span class="card-top-tag">${escapeHtml(course.category)}</span>
+        </div>
+        <div class="summary-grid">
+            <div class="summary-field">
+                <div class="summary-label">课程名称</div>
+                <div class="summary-val">${escapeHtml(course.name)}</div>
+            </div>
+            <div class="summary-field">
+                <div class="summary-label">课程类别</div>
+                <div class="summary-val">${escapeHtml(course.category)}</div>
+            </div>
+            <div class="summary-field">
+                <div class="summary-label">认证讲师</div>
+                <div class="summary-val">${escapeHtml(trainerDisplay)}</div>
+            </div>
+            <div class="summary-field">
+                <div class="summary-label">是否年度计划</div>
+                <div class="summary-val">${isAnnualDisplay}</div>
+            </div>
+        </div>
+    `;
+    document.getElementById('modalDetail').classList.add('show');
+}
+
+function closeDetailModal(){
+    document.getElementById('modalDetail').classList.remove('show');
+}
+
+function getTrainerCourseNames(trainer) {
+    let rawCourses = (trainer.courses || "").toString().trim();
+    const allCourses = getCourses();
+
+    if (rawCourses && isNaN(Number(rawCourses)) && rawCourses !== "暂无") {
+        return rawCourses;
+    }
+
+    const matched = allCourses.filter(c => {
+        return c.trainer && trainer.name && (c.trainer.includes(trainer.name) || trainer.name.includes(c.trainer));
+    }).map(c => c.name);
+
+    if (matched.length > 0) {
+        return matched.join("、");
+    }
+
+    return rawCourses && isNaN(Number(rawCourses)) ? rawCourses : "暂未关联具体课程";
+}
+
+function renderTrainerCatalog(){
+    const trainers = getTrainers();
+    const keyword = (document.getElementById('trainerSearchKeyword')?.value || "").toLowerCase().trim();
+    const container = document.getElementById('trainerGridContainer');
+
+    if(trainers.length === 0){
+        container.innerHTML = `
+            <div class="empty-box">
+                <div class="empty-icon">◎</div>
+                <div class="empty-title">当前暂无内训师资源</div>
+                <div class="empty-desc">支持批量导入 4 列清单：姓名、所属部门、擅长领域、已开发课程。</div>
+                <button class="btn btn-primary btn-sm" onclick="openAddTrainerModal()">＋ 新增内训师</button>
+            </div>
+        `;
+        return;
+    }
+
+    const filtered = trainers.filter(t => {
+        const courseText = getTrainerCourseNames(t);
+        return !keyword ||
+            t.name.toLowerCase().includes(keyword) ||
+            (t.department || "").toLowerCase().includes(keyword) ||
+            (t.fields || "").toLowerCase().includes(keyword) ||
+            courseText.toLowerCase().includes(keyword);
+    });
+
+    if(filtered.length === 0){
+        container.innerHTML = `
+            <div class="empty-box">
+                <div class="empty-title">未搜索到匹配的内训师</div>
+                <div class="empty-desc">请尝试调整搜索关键词。</div>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = `
+        <div class="resource-grid">
+            ${filtered.map(t => {
+                const courseNames = getTrainerCourseNames(t);
+                return `
+                <div class="resource-card">
+                    <div>
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                            <span class="card-top-tag">${escapeHtml(t.department || "业务部门")}</span>
+                        </div>
+                        <h4 style="margin-bottom:6px;">${escapeHtml(t.name)}</h4>
+                        <div class="resource-desc">擅长领域：${escapeHtml(t.fields || "专业业务实战")}</div>
+                    </div>
+                    <div>
+                        <div class="resource-meta-list">
+                            <div class="resource-meta-item" style="flex-direction:column; align-items:flex-start; gap:2px;">
+                                <span style="color:var(--text-muted);">已开发课程</span>
+                                <strong style="color:var(--text-main); font-size:11px; line-height:1.4; word-break:break-all;">
+                                    ${escapeHtml(courseNames)}
+                                </strong>
+                            </div>
+                        </div>
+                        <div class="card-footer-action">
+                            <button class="btn btn-secondary btn-sm" onclick="showTrainerDetailsById('${t.id}')">查看讲师详情</button>
+                        </div>
+                    </div>
+                </div>
+            `;}).join("")}
+        </div>
+    `;
+}
+
+function openAddTrainerModal(){
+    document.getElementById('newTrainerName').value = "";
+    document.getElementById('newTrainerDept').value = "";
+    document.getElementById('newTrainerFields').value = "";
+    document.getElementById('newTrainerCourses').value = "";
+    document.getElementById('modalAddTrainer').classList.add('show');
+}
+function closeAddTrainerModal(){
+    document.getElementById('modalAddTrainer').classList.remove('show');
+}
+
+function submitAddTrainer(){
+    const name = document.getElementById('newTrainerName').value.trim();
+    if(!name){ showToast("请填写内训师姓名！"); return; }
+    const dept = document.getElementById('newTrainerDept').value.trim() || "未指定部门";
+    const fields = document.getElementById('newTrainerFields').value.trim() || "业务实操";
+    const courses = document.getElementById('newTrainerCourses').value.trim() || "暂无";
+
+    const trainers = getTrainers();
+    trainers.unshift({
+        id: "trainer_" + Date.now(),
+        name,
+        department: dept,
+        fields,
+        courses
+    });
+    setTrainers(trainers);
+    closeAddTrainerModal();
+    showToast("内训师添加成功！");
+    renderTrainerCatalog();
+}
+
+function openBatchImportTrainerModal(){
+    parsedImportTrainers = [];
+    document.getElementById('importTrainerPasteContent').value = "";
+    document.getElementById('selectedTrainerFileName').innerText = "";
+    document.getElementById('csvTrainerFileInput').value = "";
+    document.getElementById('importTrainerPreviewArea').style.display = "none";
+    const btn = document.getElementById('btnConfirmBatchTrainerImport');
+    btn.disabled = true;
+    btn.innerText = "确认导入入库 (0)";
+    switchTrainerImportTab('paste');
+    document.getElementById('modalBatchImportTrainer').classList.add('show');
+}
+function closeBatchImportTrainerModal(){
+    document.getElementById('modalBatchImportTrainer').classList.remove('show');
+}
+
+function switchTrainerImportTab(tab){
+    currentTrainerImportTab = tab;
+    const pPaste = document.getElementById('importTrainerPanePaste');
+    const pFile = document.getElementById('importTrainerPaneFile');
+    const tPaste = document.getElementById('tabTrainerPaste');
+    const tFile = document.getElementById('tabTrainerFile');
+
+    if(tab === 'paste'){
+        pPaste.style.display = "block";
+        pFile.style.display = "none";
+        tPaste.className = "btn btn-subtle btn-sm";
+        tFile.className = "btn btn-secondary btn-sm";
+    } else {
+        pPaste.style.display = "none";
+        pFile.style.display = "block";
+        tFile.className = "btn btn-subtle btn-sm";
+        tPaste.className = "btn btn-secondary btn-sm";
+    }
+}
+
+function handleTrainerFileSelected(event){
+    const file = event.target.files[0];
+    if(!file) return;
+    document.getElementById('selectedTrainerFileName').innerText = "已选择文件: " + file.name;
+    const reader = new FileReader();
+    reader.onload = function(e){
+        document.getElementById('importTrainerPasteContent').value = e.target.result;
+        parseAndPreviewTrainerImport();
+    };
+    reader.readAsText(file, "UTF-8");
+}
+
+function downloadTrainerCsvTemplate(){
+    const header = "姓名,所属部门,擅长领域,已开发课程\n";
+    const samples = [
+        "张晓明,数字化推进部,AI协同办公与提效,AI办公效率实操",
+        "李雅楠,生产运营中心,精益现场管理与5S,精益改善实战",
+        "陈思远,商务与法务部,商务谈判与合同博弈,商务谈判技巧"
+    ].join("\n");
+
+    const blob = new Blob(["\uFEFF" + header + samples], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    link.setAttribute("download", "内训师4列模板.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showToast("4列内训师模板下载成功！");
+}
+
+function parseAndPreviewTrainerImport(){
+    const rawText = document.getElementById('importTrainerPasteContent').value.trim();
+    if(!rawText){
+        showToast("请先粘贴内容或选择 CSV 文件！");
+        return;
+    }
+
+    const lines = rawText.split(/\r?\n/).filter(line => line.trim().length > 0);
+    parsedImportTrainers = [];
+
+    lines.forEach((line, index) => {
+        if(index === 0 && (line.includes("姓名") || line.includes("部门"))) return;
+
+        let cols = line.includes("\t") ? line.split("\t") : line.split(",");
+        cols = cols.map(s => s.trim().replace(/^["']|["']$/g, ""));
+
+        if(cols.length >= 1 && cols[0]){
+            parsedImportTrainers.push({
+                id: "trainer_" + Date.now() + "_" + Math.random().toString(36).substr(2, 4),
+                name: cols[0],
+                department: cols[1] || "业务部门",
+                fields: cols[2] || "业务经验",
+                courses: cols[3] || "暂无"
+            });
+        }
+    });
+
+    if(parsedImportTrainers.length === 0){
+        showToast("未能识别出有效内训师数据！");
+        return;
+    }
+
+    const tbody = document.getElementById('importTrainerPreviewTableBody');
+    tbody.innerHTML = parsedImportTrainers.map(t => `
+        <tr>
+            <td style="font-weight:600;">${escapeHtml(t.name)}</td>
+            <td>${escapeHtml(t.department)}</td>
+            <td>${escapeHtml(t.fields)}</td>
+            <td>${escapeHtml(t.courses)}</td>
+        </tr>
+    `).join("");
+
+    document.getElementById('previewTrainerCountBadge').innerText = parsedImportTrainers.length;
+    document.getElementById('importTrainerPreviewArea').style.display = "block";
+
+    const btn = document.getElementById('btnConfirmBatchTrainerImport');
+    btn.disabled = false;
+    btn.innerText = `确认导入入库 (${parsedImportTrainers.length})`;
+}
+
+function executeBatchTrainerImport(){
+    if(parsedImportTrainers.length === 0) return;
+    const existing = getTrainers();
+    setTrainers([...parsedImportTrainers, ...existing]);
+    const count = parsedImportTrainers.length;
+    closeBatchImportTrainerModal();
+    showToast(`批量导入成功！已入库 ${count} 位内训师。`);
+    renderTrainerCatalog();
+}
+
+function showTrainerDetailsById(id){
+    const trainer = getTrainers().find(t => t.id === id);
+    if(!trainer) return;
+
+    const courseNames = getTrainerCourseNames(trainer);
+
+    document.getElementById('detailModalTitle').innerText = "内训师详情 · " + trainer.name;
+    document.getElementById('detailModalBody').innerHTML = `
+        <div style="display:flex; gap:8px; margin-bottom:12px; align-items:center;">
+            <span class="card-top-tag">${escapeHtml(trainer.department)}</span>
+        </div>
+        <div class="summary-grid">
+            <div class="summary-field">
+                <div class="summary-label">讲师姓名</div>
+                <div class="summary-val">${escapeHtml(trainer.name)}</div>
+            </div>
+            <div class="summary-field">
+                <div class="summary-label">所属部门</div>
+                <div class="summary-val">${escapeHtml(trainer.department)}</div>
+            </div>
+            <div class="summary-field" style="grid-column: 1 / -1;">
+                <div class="summary-label">擅长领域</div>
+                <div class="summary-val">${escapeHtml(trainer.fields)}</div>
+            </div>
+            <div class="summary-field" style="grid-column: 1 / -1;">
+                <div class="summary-label">已开发课程</div>
+                <div class="summary-val" style="line-height:1.6;">${escapeHtml(courseNames)}</div>
+            </div>
+        </div>
+    `;
+    document.getElementById('modalDetail').classList.add('show');
+}
+
+function renderPoolView(){
+    const requests = getRequests().filter(r => r.pool);
+    const container = document.getElementById('poolTableContainer');
+
+    if(requests.length === 0){
+        container.innerHTML = `
+            <div class="empty-box">
+                <div class="empty-icon">◇</div>
+                <div class="empty-title">当前课程开发池暂无需求</div>
+                <div class="empty-desc">当员工提出的真实业务需求无法由现有课程或内训师覆盖时，将汇集至此供HR立项开发。</div>
+                <button class="btn btn-primary btn-sm" onclick="navigateTo('submit')">＋ 提报并纳入开发池</button>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = `
+        <div class="card data-table-wrapper">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>立项课程主题</th>
+                        <th>类别</th>
+                        <th>提报部门</th>
+                        <th>预计受益规模</th>
+                        <th>开发状态</th>
+                        <th style="text-align:right;">管理操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${requests.map(r => `
+                        <tr>
+                            <td>
+                                <div style="font-weight:700;">${escapeHtml(r.theme)}</div>
+                                <div style="font-size:11px; color:var(--text-muted); margin-top:2px;">${escapeHtml(r.scenario.substring(0, 36))}...</div>
+                            </td>
+                            <td><span class="pill-tag">${escapeHtml(r.category)}</span></td>
+                            <td>${escapeHtml(r.department || "全员")}</td>
+                            <td>${escapeHtml(r.headcount)}</td>
+                            <td>
+                                <span class="status-pill ${r.poolStatus === '已立项' ? 'green' : 'amber'}">${escapeHtml(r.poolStatus || "待评估")}</span>
+                            </td>
+                            <td style="text-align:right;">
+                                <select class="form-select" style="width:110px; padding:4px 6px; font-size:11px;" onchange="updatePoolStatus('${r.id}', this.value)">
+                                    <option value="待评估" ${r.poolStatus === '待评估' ? 'selected' : ''}>待评估</option>
+                                    <option value="已立项" ${r.poolStatus === '已立项' ? 'selected' : ''}>已立项</option>
+                                    <option value="开发中" ${r.poolStatus === '开发中' ? 'selected' : ''}>开发中</option>
+                                    <option value="已上线" ${r.poolStatus === '已上线' ? 'selected' : ''}>已上线</option>
+                                </select>
+                            </td>
+                        </tr>
+                    `).join("")}
+                </tbody>
+            </table>
+        </div>
+    `;
+}
+
+function updatePoolStatus(id, newStatus){
+    const requests = getRequests();
+    const target = requests.find(r => r.id === id);
+    if(target){
+        target.poolStatus = newStatus;
+        setRequests(requests);
+        showToast("开发池状态已更新为: " + newStatus);
+    }
+}
+
+function recalculateDashboard(){
+    const requests = getRequests();
+    const pool = requests.filter(r => r.pool);
+
+    document.getElementById('dashTotal').innerText = requests.length;
+    document.getElementById('dashMonth').innerText = requests.length;
+    document.getElementById('dashPoolCount').innerText = pool.length;
+
+    let matchedCount = requests.filter(r => r.aiDiagnosis && r.aiDiagnosis.matchedCourseCount > 0).length;
+    let rate = requests.length > 0 ? Math.round((matchedCount / requests.length) * 100) : 0;
+    document.getElementById('dashMatchRate').innerText = rate + "%";
+
+    document.getElementById('dashFunnelContainer').innerHTML = `
+        <div class="funnel-row">
+            <span class="funnel-row-label">1. 员工业务提报数</span>
+            <span class="funnel-row-val">${requests.length}</span>
+        </div>
+        <div class="funnel-row">
+            <span class="funnel-row-label">2. 匹配已有课程资源</span>
+            <span class="funnel-row-val">${matchedCount}</span>
+        </div>
+        <div class="funnel-row">
+            <span class="funnel-row-label">3. 列入新课程开发池</span>
+            <span class="funnel-row-val">${pool.length}</span>
+        </div>
+    `;
+
+    const catMap = {};
+    requests.forEach(r => {
+        catMap[r.category] = (catMap[r.category] || 0) + 1;
+    });
+
+    const catContainer = document.getElementById('dashCategoryBarsContainer');
+    const catKeys = Object.keys(catMap);
+    if(catKeys.length === 0){
+        catContainer.innerHTML = `<div style="font-size:12px; color:var(--text-muted);">暂无提报数据</div>`;
+    } else {
+        catContainer.innerHTML = `<div class="bar-chart-list">` + catKeys.map(k => {
+            const pct = Math.round((catMap[k] / requests.length) * 100);
+            return `
+                <div class="bar-chart-item">
+                    <div class="bar-meta"><span>${escapeHtml(k)}</span><span>${catMap[k]} 条 (${pct}%)</span></div>
+                    <div class="bar-track"><div class="bar-fill" style="width:${pct}%;"></div></div>
+                </div>
+            `;
+        }).join("") + `</div>`;
+    }
+
+    const topContainer = document.getElementById('dashTopTopicsContainer');
+    if(requests.length === 0){
+        topContainer.innerHTML = `<div style="font-size:12px; color:var(--text-muted);">暂无高频提报需求</div>`;
+    } else {
+        topContainer.innerHTML = requests.slice(0, 4).map((r, i) => `
+            <div class="funnel-row" style="margin-bottom:6px;">
+                <span style="font-size:12px; font-weight:600;">#${i+1} ${escapeHtml(r.theme)}</span>
+                <span class="pill-tag">${escapeHtml(r.category)}</span>
+            </div>
+        `).join("");
+    }
+
+    const oppContainer = document.getElementById('dashOpportunitiesContainer');
+    if(pool.length === 0){
+        oppContainer.innerHTML = `<div style="font-size:12px; color:var(--text-muted);">当前暂无开发缺口</div>`;
+    } else {
+        oppContainer.innerHTML = pool.slice(0, 3).map(p => `
+            <div class="funnel-row" style="margin-bottom:6px;">
+                <div>
+                    <div style="font-size:12px; font-weight:600;">${escapeHtml(p.theme)}</div>
+                    <div style="font-size:10px; color:var(--text-muted);">${escapeHtml(p.department || "全员")} · ${escapeHtml(p.headcount)}</div>
+                </div>
+                <span class="status-pill amber">${escapeHtml(p.poolStatus || "待评估")}</span>
+            </div>
+        `).join("");
+    }
+}
+
+function updateGlobalBadgesAndCockpit(){
+    const myReq = getRequests();
+    const courses = getCourses();
+    const trainers = getTrainers();
+    const pool = myReq.filter(r => r.pool);
+
+    const bMy = document.getElementById('badgeMyCount');
+    const bCourse = document.getElementById('badgeCourseCount');
+    const bTrainer = document.getElementById('badgeTrainerCount');
+    const bPool = document.getElementById('badgePoolCount');
+
+    if(bMy) bMy.innerText = myReq.length;
+    if(bCourse) bCourse.innerText = courses.length;
+    if(bTrainer) bTrainer.innerText = trainers.length;
+    if(bPool) bPool.innerText = pool.length;
+}
+
+function showToast(msg){
+    const shelf = document.getElementById('toastShelf');
+    const el = document.createElement('div');
+    el.className = 'toast-msg';
+    el.innerText = msg;
+    shelf.appendChild(el);
+    setTimeout(() => el.classList.add('visible'), 10);
+    setTimeout(() => {
+        el.classList.remove('visible');
+        setTimeout(() => {
+            if(el.parentNode) el.parentNode.removeChild(el);
+        }, 250);
+    }, 2800);
+}
+
+function escapeHtml(str){
+    if(!str) return "";
+    return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    setupRadioTiles();
+    updateAdminUI();
+    updateGlobalBadgesAndCockpit();
+    renderHomeView();
+    syncResourcesFromGoogleSheet(false);
+});
+</script>
+</body>
+</html>
